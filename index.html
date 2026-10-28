@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>IIT-4A Holiday Photos</title>
+<meta name="description" content="Share a holiday photograph or short video with the IIT-4A community — any holiday from Thanksgiving through Dr. Martin Luther King Jr. Day. Submissions close January 30, 2027.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Light limestone ground, Illinois Tech red for action, black type, 4A mark in the masthead.
+   One column: masthead, what counts, the form, then this person's own submissions. */
+:root{
+  --bg:#F1F7FB; --card:#FFFFFF; --sunk:#F7FAFC; --line:#D3DEE7;
+  --ink:#111518; --mid:#4A545C; --quiet:#77818A;
+  --red:#C8102E; --red-dk:#9B0C23; --gold:#C9A227;
+  --ok:#17663F;
+  --snow:rgba(72,104,130,.36);
+  --skytop:rgba(158,197,226,.72);
+  --sunglow:rgba(255,205,115,.78);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  min-height:100vh;
+}
+/* winter sky: a cold gradient at the top, then the falling-weather canvas */
+body::before{
+  content:"";position:fixed;inset:0 0 auto 0;height:70vh;z-index:0;pointer-events:none;
+  background:linear-gradient(to bottom,var(--skytop),transparent 85%);
+}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{
+  position:relative;z-index:1;
+  max-width:40rem;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:2.2rem 4rem;
+}
+
+/* weather picker */
+.wxintro{font-size:.88rem;color:var(--mid);margin-bottom:.55rem;max-width:40ch}
+.wxbar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;
+  margin-bottom:1.2rem;
+}
+.wxlab{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--quiet);margin-right:.25rem;
+}
+.wxlab i{
+  width:7px;height:7px;flex:none;border-radius:50%;background:var(--gold);
+}
+.wxbar button{
+  font:inherit;font-size:.76rem;font-weight:500;line-height:1;
+  background:var(--card);color:var(--mid);
+  border:1px solid var(--line);padding:.4rem .6rem;cursor:pointer;
+  transition:color .15s,border-color .15s;
+}
+.wxbar button:hover{color:var(--ink);border-color:var(--mid)}
+.wxbar button.on{
+  color:#fff;background:var(--red);border-color:var(--red);font-weight:600;
+}
+
+/* masthead */
+.head{display:flex;gap:.9rem;align-items:center;margin-bottom:1.1rem}
+.mark{
+  width:52px;height:52px;flex:none;background:var(--red);
+  border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Spectral',Georgia,serif;font-weight:700;font-size:22px;color:#fff;
+  letter-spacing:-.02em;
+}
+.org{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+h1{
+  font-family:'Spectral',Georgia,serif;font-weight:700;
+  font-size:clamp(1.7rem,5.4vw,2.3rem);line-height:1.1;letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.lede{color:var(--mid);margin:.9rem 0 0;max-width:44ch}
+
+.season{
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
+  padding:1rem 1.1rem;margin-top:1.4rem;box-shadow:0 1px 2px rgba(17,21,24,.05);
+}
+.season h2{font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem}
+.season p{font-size:.95rem;color:var(--ink)}
+.season .list{color:var(--mid);font-size:.9rem;margin-top:.8rem}
+.mon{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+     color:var(--quiet);margin:.95rem 0 .4rem}
+.mon:first-of-type{margin-top:.6rem}
+.hols{display:flex;flex-wrap:wrap;gap:.3rem}
+.hols span{
+  font-size:.8rem;line-height:1.25;color:var(--ink);
+  background:var(--sunk);border:1px solid var(--line);padding:.22rem .5rem;
+}
+.hols span em{font-style:normal;color:var(--quiet);font-size:.92em}
+
+/* form */
+form{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);
+     padding:1.4rem 1.3rem;margin-top:1.5rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
+.fld{margin-bottom:1.1rem}
+label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.03em;margin-bottom:.35rem}
+label .opt{font-weight:400;color:var(--quiet);text-transform:none;letter-spacing:0}
+input[type=text],input[type=email],textarea,select{
+  width:100%;font:inherit;font-size:.98rem;color:var(--ink);
+  background:var(--sunk);border:1px solid var(--line);padding:.65rem .75rem;
+  border-radius:0;
+}
+textarea{min-height:4.5rem;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,.drop:focus-visible{
+  outline:2px solid var(--red);outline-offset:2px}
+.hint{font-size:.82rem;color:var(--quiet);margin-top:.3rem}
+
+.drop{
+  border:2px dashed var(--line);background:var(--sunk);
+  padding:1.6rem 1rem;text-align:center;cursor:pointer;display:block;
+  transition:border-color .15s,background .15s;
+}
+.drop:hover,.drop.over{border-color:var(--red);background:var(--card)}
+.drop b{display:block;font-size:1rem;margin-bottom:.2rem}
+.drop span{font-size:.86rem;color:var(--quiet)}
+input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.5rem,1fr));gap:.5rem;margin-top:.8rem}
+.thumb{position:relative;aspect-ratio:1;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{
+  position:absolute;top:2px;right:2px;width:22px;height:22px;
+  background:rgba(0,0,0,.72);color:#fff;border:0;cursor:pointer;
+  font:inherit;font-size:14px;line-height:1;
+}
+
+button.go{
+  width:100%;background:var(--red);color:#fff;border:0;
+  font:inherit;font-weight:600;font-size:1rem;padding:.85rem 1rem;cursor:pointer;
+}
+button.go:hover:not(:disabled){background:var(--red-dk)}
+button.go:disabled{opacity:.5;cursor:not-allowed}
+
+.msg{margin-top:1rem;padding:.85rem 1rem;font-size:.94rem;border-left:4px solid}
+.msg.ok{background:var(--sunk);border-color:var(--ok);color:var(--ink)}
+.msg.err{background:var(--sunk);border-color:var(--red);color:var(--ink)}
+
+/* mine */
+.mine{margin-top:2.4rem}
+.mine h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.25rem;margin-bottom:.2rem}
+.mine .sub{color:var(--quiet);font-size:.9rem;margin-bottom:1rem}
+.rows{display:grid;gap:.6rem}
+.row{display:grid;grid-template-columns:4.5rem 1fr;gap:.9rem;background:var(--card);border:1px solid var(--line);padding:.7rem;min-width:0}
+.row .ph{aspect-ratio:1;background:var(--sunk);overflow:hidden}
+.row .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.row .meta{min-width:0}
+.row .cap{font-size:.94rem;margin-bottom:.2rem;overflow-wrap:anywhere}
+.row .who{font-size:.82rem;color:var(--quiet)}
+.row .tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-top:.25rem}
+.empty{background:var(--card);border:1px dashed var(--line);padding:1.5rem;text-align:center;color:var(--quiet);font-size:.92rem}
+
+/* the deadline */
+.deadline{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
+          padding:.75rem .95rem;margin-top:1.1rem;font-size:.93rem;color:var(--ink);
+          box-shadow:0 1px 2px rgba(17,21,24,.05)}
+
+/* in memoriam */
+.memory{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
+        padding:1rem 1.1rem;margin-top:1rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
+.memory h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.1rem;margin-bottom:.35rem}
+.memory p{font-size:.93rem;color:var(--mid)}
+
+/* what to send */
+.ideas{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
+       padding:1rem 1.1rem;margin-top:1rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
+.ideas h2{font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+          color:var(--mid);margin-bottom:.55rem}
+.ideas ul{list-style:none;margin:0}
+.ideas li{font-size:.93rem;color:var(--ink);padding-left:1.1rem;position:relative;margin-bottom:.34rem}
+.ideas li:last-child{margin-bottom:0}
+.ideas li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--red)}
+.ideas .fine{color:var(--quiet);font-size:.86rem;margin-top:.7rem}
+
+/* consent */
+.consent{display:flex;gap:.6rem;align-items:flex-start;background:var(--sunk);
+         border:1px solid var(--line);padding:.8rem .9rem;margin-bottom:1.1rem}
+.consent input{width:18px;height:18px;flex:none;margin-top:.1rem;accent-color:var(--red)}
+.consent label{font-size:.88rem;font-weight:400;letter-spacing:0;line-height:1.45;margin:0;color:var(--ink)}
+
+/* the three most recent approved photos */
+.recent{margin-top:2.4rem}
+.recent h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.25rem;margin-bottom:.2rem}
+.recent .sub{color:var(--quiet);font-size:.9rem;margin-bottom:1rem}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));gap:.7rem}
+.card{background:var(--card);border:1px solid var(--line);min-width:0;
+      box-shadow:0 1px 2px rgba(17,21,24,.05)}
+.card .ph{aspect-ratio:4/3;background:var(--sunk);overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .txt{padding:.6rem .7rem}
+.card .cap{font-size:.86rem;line-height:1.35;overflow-wrap:anywhere}
+.card .who{font-size:.76rem;color:var(--quiet);margin-top:.25rem}
+
+/* email fallback path */
+.mailcard{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--red);padding:1.4rem 1.3rem;margin-top:1.5rem}
+.mailcard h2{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:1.3rem;margin-bottom:.4rem}
+.mailcard p{color:var(--mid);font-size:.95rem}
+.mailcard ol{margin:.9rem 0 1.1rem 1.2rem;color:var(--ink);font-size:.95rem}
+.mailcard ol li{margin-bottom:.3rem;padding-left:.2rem}
+.mailbtn{
+  display:block;text-align:center;background:var(--red);color:#fff;text-decoration:none;
+  font-weight:600;font-size:1rem;padding:.85rem 1rem;
+}
+.mailbtn:hover{background:var(--red-dk)}
+.alt{text-align:center;font-size:.86rem;color:var(--quiet);margin-top:.9rem}
+.alt a{color:var(--red)}
+
+footer{margin-top:2.6rem;padding-top:1.1rem;border-top:1px solid var(--line);color:var(--quiet);font-size:.84rem}
+footer a{color:var(--red)}
+</style>
+
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="wrap">
+
+  <p class="wxintro">Set the weather to match your own &mdash; wherever in the world
+  you are reading this.</p>
+
+  <div class="wxbar" id="wxbar" role="group" aria-label="Choose your weather">
+    <span class="wxlab"><i></i>Your weather</span>
+    <button type="button" data-w="auto" class="on" aria-label="Let the weather change on its own">Auto</button>
+    <button type="button" data-w="0" aria-label="Snowfall">Snow</button>
+    <button type="button" data-w="1" aria-label="Light flurries">Flurries</button>
+    <button type="button" data-w="2" aria-label="Blowing snow">Blowing</button>
+    <button type="button" data-w="3" aria-label="Sleet">Sleet</button>
+    <button type="button" data-w="4" aria-label="Clear and cold">Clear</button>
+    <button type="button" data-w="5" aria-label="Winter sunshine">Sunshine</button>
+  </div>
+
+  <div class="head">
+    <div class="mark">4A</div>
+    <div>
+      <p class="org">African American Alumni Association of Illinois Tech</p>
+      <h1>Holiday Photos</h1>
+    </div>
+  </div>
+
+  <p class="lede">However your family marks the season, we would be glad to see it. This call is
+  open to every IIT-4A member, to our students, and to the friends and families who sit at your
+  table. Selected photographs and short videos will appear in Newsletter Issue III, published
+  January 31.</p>
+
+  <p class="deadline"><b>Submissions close Saturday, January 30, 2027 at midnight.</b>
+  Photographs and short videos &mdash; about a minute is plenty &mdash; are both welcome.</p>
+
+  <div class="season">
+    <h2>Any holiday, Thanksgiving through King Day</h2>
+    <p>Our alumni celebrate all over the world. If your holiday is on this list &mdash;
+    or if it isn't &mdash; we want the picture.</p>
+
+    <p class="mon">Late November</p>
+    <div class="hols">
+      <span>Thanksgiving <em>&middot; US</em></span>
+      <span>Native American Heritage Day <em>&middot; US</em></span>
+      <span>St. Andrew's Day <em>&middot; Scotland</em></span>
+      <span>Advent begins</span>
+    </div>
+
+    <p class="mon">December</p>
+    <div class="hols">
+      <span>Bodhi Day <em>&middot; Buddhist</em></span>
+      <span>Hanukkah <em>&middot; Jewish</em></span>
+      <span>Santa Lucia <em>&middot; Scandinavia</em></span>
+      <span>Las Posadas <em>&middot; Mexico</em></span>
+      <span>Winter Solstice &amp; Yule</span>
+      <span>Nochebuena <em>&middot; Latin America</em></span>
+      <span>Christmas</span>
+      <span>Boxing Day <em>&middot; Commonwealth</em></span>
+      <span>Day of Goodwill <em>&middot; South Africa</em></span>
+      <span>Junkanoo <em>&middot; Bahamas &amp; Caribbean</em></span>
+      <span>Kwanzaa</span>
+      <span>Watch Night</span>
+      <span>Hogmanay <em>&middot; Scotland</em></span>
+      <span>Omisoka <em>&middot; Japan</em></span>
+    </div>
+
+    <p class="mon">January</p>
+    <div class="hols">
+      <span>New Year's Day</span>
+      <span>Emancipation &amp; Jubilee Day <em>&middot; US</em></span>
+      <span>Haitian Independence Day</span>
+      <span>Ancestors' Day <em>&middot; Haiti</em></span>
+      <span>Three Kings Day &middot; D&iacute;a de Reyes</span>
+      <span>Epiphany</span>
+      <span>Ganna <em>&middot; Ethiopian Christmas</em></span>
+      <span>Coptic Christmas <em>&middot; Egypt</em></span>
+      <span>Orthodox Christmas</span>
+      <span>Lohri <em>&middot; Punjab</em></span>
+      <span>Makar Sankranti &amp; Pongal <em>&middot; India</em></span>
+      <span>Seollal preparations <em>&middot; Korea</em></span>
+      <span>Timkat <em>&middot; Ethiopia</em></span>
+      <span>Dr. Martin Luther King Jr. Day</span>
+    </div>
+
+    <p class="list">Students and alumni both, anywhere in the world. Family tables, church,
+    service days, kitchens, travel, reunions, a quiet morning &mdash; whatever the season
+    looks like for you. If we have missed your holiday, name it in the caption and we will
+    name it in the newsletter.</p>
+  </div>
+
+  <div class="ideas">
+    <h2>Not sure what to send?</h2>
+    <ul>
+      <li>The table before anyone sits down, or right after everyone has.</li>
+      <li>Four generations in one frame &mdash; the grandparents and the newest baby.</li>
+      <li>Your grandmother's hands, or the one dish that has to be on the table.</li>
+      <li>The Kwanzaa kinara, the menorah, the tree, the altar, the church pew.</li>
+      <li>Serving a meal, packing boxes, or a King Day march.</li>
+      <li>The airport reunion, the driveway hug, the group shot nobody was ready for.</li>
+      <li>Your Illinois Tech sweatshirt somewhere warm.</li>
+      <li>A short video &mdash; the blessing, the music, a greeting to the 4A community.</li>
+    </ul>
+    <p class="fine">Phone photos are welcome. Send the largest version your phone will give you &mdash;
+    print needs the detail.</p>
+  </div>
+
+  <section class="memory">
+    <h2>If this season carries a loss</h2>
+    <p>Many of us will set a place this year for someone who is no longer at the table. If you
+    would like to share a holiday photograph of someone you have lost, please do. We will run it
+    with the care it deserves, and the community will hold that memory with you.</p>
+  </section>
+
+  <form id="f" novalidate>
+    <div class="fld">
+      <label for="nm">Your name or family name</label>
+      <input type="text" id="nm" name="nm" autocomplete="name" placeholder="The Martin Family">
+    </div>
+
+    <div class="fld">
+      <label for="em">Email</label>
+      <input type="email" id="em" name="em" autocomplete="email" placeholder="you@example.com">
+      <p class="hint">So we can reach you if your photo is selected. Never published.</p>
+    </div>
+
+    <div class="fld">
+      <label for="hol">Which holiday</label>
+      <select id="hol" name="hol">
+        <option value="">Choose one…</option>
+        <optgroup label="Late November">
+          <option>Thanksgiving</option>
+          <option>Native American Heritage Day</option>
+          <option>St. Andrew's Day</option>
+          <option>Advent</option>
+        </optgroup>
+        <optgroup label="December">
+          <option>Bodhi Day</option>
+          <option>Hanukkah</option>
+          <option>Santa Lucia</option>
+          <option>Las Posadas</option>
+          <option>Winter Solstice / Yule</option>
+          <option>Nochebuena</option>
+          <option>Christmas</option>
+          <option>Boxing Day</option>
+          <option>Day of Goodwill</option>
+          <option>Junkanoo</option>
+          <option>Kwanzaa</option>
+          <option>Watch Night</option>
+          <option>Hogmanay / New Year's Eve</option>
+          <option>Omisoka</option>
+        </optgroup>
+        <optgroup label="January">
+          <option>New Year's Day</option>
+          <option>Emancipation / Jubilee Day</option>
+          <option>Haitian Independence Day</option>
+          <option>Ancestors' Day</option>
+          <option>Three Kings Day / Día de Reyes</option>
+          <option>Epiphany</option>
+          <option>Ganna (Ethiopian Christmas)</option>
+          <option>Coptic Christmas</option>
+          <option>Orthodox Christmas</option>
+          <option>Lohri</option>
+          <option>Makar Sankranti / Pongal</option>
+          <option>Seollal preparations</option>
+          <option>Timkat</option>
+          <option>Dr. Martin Luther King Jr. Day</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option>More than one / the whole season</option>
+          <option>Another holiday — I'll name it in the caption</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="fld">
+      <label for="cap">Short caption <span class="opt">— one or two lines</span></label>
+      <textarea id="cap" name="cap" maxlength="280" placeholder="Four generations at my mother's table in Bronzeville, Thanksgiving 2026."></textarea>
+      <p class="hint"><span id="cc">0</span>/280</p>
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="ok" name="ok">
+      <label for="ok">I took this photograph or video, or I have permission from whoever did, and everyone
+      recognisable in it is content to appear. IIT-4A may publish it, with my caption and the
+      name I gave, in Newsletter Issue III and on its channels.</label>
+    </div>
+
+    <button class="go" id="go" type="submit">Attach my photos and send</button>
+    <div class="msg err" id="msg" hidden></div>
+    <p class="alt">This opens an email to the editor with your details already filled in.
+    Attach your photographs or short video there and send.</p>
+  </form>
+
+  <footer>
+    Questions, or trouble uploading? Email
+    <a href="mailto:iit4a.records@gmail.com">iit4a.records@gmail.com</a>.
+    Every photo is reviewed by the editor before it appears anywhere. Your email address is
+    only used to reach you about your submission, and is never published.
+  </footer>
+
+</div>
+
+<script>
+var $ = function(id){ return document.getElementById(id); };
+function show(t){ var m=$('msg'); m.textContent=t; m.hidden=false; }
+$('cap').addEventListener('input', function(e){ $('cc').textContent = e.target.value.length; });
+
+$('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  var nm = $('nm').value.trim(), em = $('em').value.trim();
+  var hol = $('hol').value, cap = $('cap').value.trim();
+  if (!nm){ show('Please add your name or family name.'); $('nm').focus(); return; }
+  if (!$('ok').checked){ show('Please tick the permission box so we know we may publish your photo.'); $('ok').focus(); return; }
+  $('msg').hidden = true;
+  var body = 'Name or family name: ' + nm
+           + '\n\nEmail: ' + em
+           + '\n\nHoliday: ' + hol
+           + '\n\nCaption: ' + cap
+           + '\n\nI confirm I may share this and that IIT-4A may publish it with my caption and name.'
+           + '\n\n\u2014 Photographs or short video attached. Thank you!\n';
+  window.location.href = 'mailto:iit4a.records@gmail.com'
+    + '?subject=' + encodeURIComponent('Holiday photo submission \u2014 IIT-4A Issue III')
+    + '&body=' + encodeURIComponent(body);
+});
+
+// ---- winter weather ---------------------------------------------------
+// One canvas, six conditions. The scene changes on its own every ~19s and
+// each flake re-rolls on its own small delay, so the turn is gradual.
+(function(){
+  var cv = document.getElementById('sky');
+  if (!cv || !cv.getContext) return;
+  var cx = cv.getContext('2d');
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var WX = [
+    { key:'snow',   label:'Snowfall',       n:150, vy:[20, 58],  vx:[-8, 8],    r:[1.2, 3.3], sway:[.4, .9],  streak:0 },
+    { key:'flurry', label:'Light flurries', n:48,  vy:[10, 26],  vx:[-14, 14],  r:[1.0, 2.2], sway:[.9, 1.8], streak:0 },
+    { key:'blow',   label:'Blowing snow',   n:185, vy:[20, 46],  vx:[52, 104],  r:[.8, 2.3],  sway:[.2, .6],  streak:1.5 },
+    { key:'sleet',  label:'Sleet',          n:205, vy:[170, 275],vx:[-26, -10], r:[.5, 1.1],  sway:[0, 0],    streak:7 },
+    { key:'clear',  label:'Clear and cold', n:26,  vy:[4, 13],   vx:[-5, 5],    r:[.9, 2.0],  sway:[1.2, 2.2],streak:0 },
+    { key:'sun',    label:'Winter sun',     n:14,  vy:[2, 9],    vx:[-4, 4],    r:[.7, 1.7],  sway:[1.0, 2.4],streak:0, sun:1 }
+  ];
+  var wi = 0, cur = WX[0], live = cur.n, W = 0, H = 0, dpr = 1, snow = 'rgba(120,140,160,.5)';
+  var glow = 'rgba(255,201,110,.7)', sunAmt = 0;
+  var POOL = 210, P = [];
+
+  function rnd(a){ return a[0] + Math.random() * (a[1] - a[0]); }
+
+  function roll(p, w){
+    p.vy = rnd(w.vy); p.vx = rnd(w.vx); p.r = rnd(w.r);
+    p.sw = rnd(w.sway); p.st = w.streak; p.wx = w.key;
+    p.ph = Math.random() * 6.283;
+  }
+  function seed(){
+    P = [];
+    for (var i = 0; i < POOL; i++){
+      var p = { x: Math.random() * W, y: Math.random() * H, due: 0 };
+      roll(p, cur); P.push(p);
+    }
+  }
+  function readSnow(){
+    var cs = getComputedStyle(document.documentElement);
+    var v = cs.getPropertyValue('--snow').trim();      if (v) snow = v;
+    var g = cs.getPropertyValue('--sunglow').trim();   if (g) glow = g;
+  }
+  // same colour, no alpha — for the outer stop of the sun's gradient
+  function fade(c){ return c.replace(/rgba?\(([^)]+)\)/, function(m, inner){
+    var n = inner.split(',').slice(0,3).join(',');
+    return 'rgba(' + n + ',0)';
+  }); }
+  function size(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(dt, t){
+    cx.clearRect(0, 0, W, H);
+
+    // a low winter sun, high and to the right — fades in on the sunshine state
+    sunAmt += ((cur.sun ? 1 : 0) - sunAmt) * Math.min(dt * 1.5, 1);
+    if (sunAmt > .01){
+      var sx = W * 0.82, sy = H * 0.13, rad = Math.max(W, H) * 0.6;
+      var rg = cx.createRadialGradient(sx, sy, 0, sx, sy, rad);
+      rg.addColorStop(0, glow);
+      rg.addColorStop(.38, fade(glow));
+      rg.addColorStop(1, 'rgba(0,0,0,0)');
+      cx.save(); cx.globalAlpha = sunAmt; cx.fillStyle = rg;
+      cx.fillRect(0, 0, W, H); cx.restore();
+    }
+
+    cx.strokeStyle = snow; cx.fillStyle = snow;
+    var n = Math.min(Math.round(live), POOL);
+    for (var i = 0; i < n; i++){
+      var p = P[i];
+      if (p.wx !== cur.key && t >= p.due) roll(p, cur);
+      var sway = p.sw ? Math.sin(t / 900 + p.ph) * p.sw * 14 : 0;
+      p.x += (p.vx + sway) * dt;
+      p.y += p.vy * dt;
+      if (p.y - p.r > H){ p.y = -p.r * 2; p.x = Math.random() * W; }
+      if (p.x < -12) p.x = W + 10; else if (p.x > W + 12) p.x = -10;
+      if (p.st){
+        var k = p.st * dt;
+        cx.lineWidth = Math.max(.6, p.r * .9);
+        cx.beginPath();
+        cx.moveTo(p.x, p.y);
+        cx.lineTo(p.x - p.vx * k, p.y - p.vy * k);
+        cx.stroke();
+      } else {
+        cx.beginPath();
+        cx.arc(p.x, p.y, p.r, 0, 6.2832);
+        cx.fill();
+      }
+    }
+  }
+
+  // the viewer can pin a condition; "Auto" hands it back to the clock
+  var pinned = false;
+  var bar = document.getElementById('wxbar');
+
+  function setWx(i){
+    wi = i; cur = WX[i];
+    var now = performance.now();
+    for (var k = 0; k < P.length; k++) P[k].due = still ? 0 : now + Math.random() * 2400;
+    if (still){ live = cur.n; draw(0, now); }   // no animation loop to pick it up
+  }
+  function turn(){
+    if (pinned) return;
+    setWx((wi + 1) % WX.length);
+    mark('auto');
+  }
+  function mark(val){
+    if (!bar) return;
+    var bs = bar.querySelectorAll('button');
+    for (var i = 0; i < bs.length; i++){
+      var on = bs[i].getAttribute('data-w') === String(val);
+      bs[i].classList.toggle('on', on);
+      bs[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+  }
+  if (bar){
+    bar.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('button[data-w]') : null;
+      if (!b) return;
+      var v = b.getAttribute('data-w');
+      if (v === 'auto'){ pinned = false; mark('auto'); }
+      else { pinned = true; setWx(parseInt(v, 10)); mark(v); }
+    });
+  }
+
+  size(); readSnow(); seed();
+  addEventListener('resize', function(){ size(); });
+  if (still){ live = cur.n; draw(0, 0); return; }
+
+  var last = performance.now();
+  (function frame(t){
+    var dt = Math.min((t - last) / 1000, .05); last = t;
+    live += (cur.n - live) * Math.min(dt * 1.1, .2);
+    draw(dt, t);
+    requestAnimationFrame(frame);
+  })(last);
+  setInterval(turn, 19000);
+})();
+
+</script>
+</body>
+</html>
