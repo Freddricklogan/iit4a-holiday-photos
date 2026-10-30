@@ -5,215 +5,228 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>IIT-4A Holiday Photos</title>
 <meta name="description" content="Share a holiday photograph or short video with the IIT-4A community — any holiday from Thanksgiving through Dr. Martin Luther King Jr. Day. Submissions close January 30, 2027.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-/* Light limestone ground, Illinois Tech red for action, black type, 4A mark in the masthead.
-   One column: masthead, what counts, the form, then this person's own submissions. */
+/* Letterhead, not an app. Paper ground, Spectral for everything a person reads,
+   one accent — Illinois Tech red — and a gold hairline. The weather lives at the
+   bottom, quietly. */
 :root{
-  --bg:#F1F7FB; --card:#FFFFFF; --sunk:#F7FAFC; --line:#D3DEE7;
-  --ink:#111518; --mid:#4A545C; --quiet:#77818A;
-  --red:#C8102E; --red-dk:#9B0C23; --gold:#C9A227;
-  --ok:#17663F;
-  --snow:rgba(72,104,130,.36);
-  --skytop:rgba(158,197,226,.72);
-  --sunglow:rgba(255,205,115,.78);
+  --paper:#FAF9F7; --card:#FFFFFF; --rule:#E3E0DB; --rule-dk:#C6C2BB;
+  --ink:#1A1D20; --mid:#54585D; --quiet:#8B8E92;
+  --red:#C8102E; --red-dk:#9B0C23; --gold:#B8912B;
+  --snow:rgba(92,102,114,.24);
+  --skytop:rgba(198,208,218,.42);
+  --sunglow:rgba(255,206,128,.55);
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:var(--bg);color:var(--ink);
-  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16.5px;line-height:1.62;
   min-height:100vh;
+  border-top:4px solid var(--red);
 }
-/* winter sky: a cold gradient at the top, then the falling-weather canvas */
 body::before{
-  content:"";position:fixed;inset:0 0 auto 0;height:70vh;z-index:0;pointer-events:none;
-  background:linear-gradient(to bottom,var(--skytop),transparent 85%);
+  content:"";position:fixed;inset:4px 0 auto 0;height:52vh;z-index:0;pointer-events:none;
+  background:linear-gradient(to bottom,var(--skytop),transparent 88%);
 }
 #sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .wrap{
   position:relative;z-index:1;
-  max-width:40rem;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:2.2rem 4rem;
+  max-width:41rem;margin:0 auto;
+  padding-left:max(20px,env(safe-area-inset-left,0px));
+  padding-right:max(20px,env(safe-area-inset-right,0px));
+  padding-block:2.8rem 3.5rem;
 }
 
-/* weather picker */
-.wxintro{font-size:.88rem;color:var(--mid);margin-bottom:.55rem;max-width:40ch}
-.wxbar{
-  display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;
-  margin-bottom:1.2rem;
+/* ---- letterhead ---- */
+.eyebrow{
+  font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--quiet);margin-bottom:1.6rem;
 }
-.wxlab{
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--quiet);margin-right:.25rem;
-}
-.wxlab i{
-  width:7px;height:7px;flex:none;border-radius:50%;background:var(--gold);
-}
-.wxbar button{
-  font:inherit;font-size:.76rem;font-weight:500;line-height:1;
-  background:var(--card);color:var(--mid);
-  border:1px solid var(--line);padding:.4rem .6rem;cursor:pointer;
-  transition:color .15s,border-color .15s;
-}
-.wxbar button:hover{color:var(--ink);border-color:var(--mid)}
-.wxbar button.on{
-  color:#fff;background:var(--red);border-color:var(--red);font-weight:600;
-}
-
-/* masthead */
-.head{display:flex;gap:.9rem;align-items:center;margin-bottom:1.1rem}
+.head{display:flex;gap:1.15rem;align-items:flex-start}
 .mark{
-  width:52px;height:52px;flex:none;background:var(--red);
-  border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);
+  width:46px;height:56px;flex:none;background:var(--red);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Spectral',Georgia,serif;font-weight:700;font-size:22px;color:#fff;
-  letter-spacing:-.02em;
+  font-family:'Spectral',Georgia,serif;font-weight:700;font-size:19px;color:#fff;
+  letter-spacing:.01em;
 }
-.org{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.org{
+  font-size:.66rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--mid);line-height:1.5;
+}
 h1{
   font-family:'Spectral',Georgia,serif;font-weight:700;
-  font-size:clamp(1.7rem,5.4vw,2.3rem);line-height:1.1;letter-spacing:-.02em;
-  text-wrap:balance;
+  font-size:clamp(2rem,6.4vw,2.85rem);line-height:1.08;letter-spacing:-.018em;
+  margin-top:.3rem;text-wrap:balance;
 }
-.lede{color:var(--mid);margin:.9rem 0 0;max-width:44ch}
+.rule{height:1px;background:var(--rule-dk);margin:1.5rem 0}
+.rule.gold{height:2px;background:var(--gold);width:3.5rem;margin:1.4rem 0 1.5rem}
 
-.season{
-  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
-  padding:1rem 1.1rem;margin-top:1.4rem;box-shadow:0 1px 2px rgba(17,21,24,.05);
+.lede{
+  font-family:'Spectral',Georgia,serif;font-size:1.14rem;line-height:1.62;
+  color:var(--ink);max-width:40ch;
 }
-.season h2{font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem}
-.season p{font-size:.95rem;color:var(--ink)}
-.season .list{color:var(--mid);font-size:.9rem;margin-top:.8rem}
-.mon{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-     color:var(--quiet);margin:.95rem 0 .4rem}
-.mon:first-of-type{margin-top:.6rem}
-.hols{display:flex;flex-wrap:wrap;gap:.3rem}
-.hols span{
-  font-size:.8rem;line-height:1.25;color:var(--ink);
-  background:var(--sunk);border:1px solid var(--line);padding:.22rem .5rem;
-}
-.hols span em{font-style:normal;color:var(--quiet);font-size:.92em}
+.lede + .lede{margin-top:.85rem;color:var(--mid)}
 
-/* form */
-form{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);
-     padding:1.4rem 1.3rem;margin-top:1.5rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
-.fld{margin-bottom:1.1rem}
-label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.03em;margin-bottom:.35rem}
-label .opt{font-weight:400;color:var(--quiet);text-transform:none;letter-spacing:0}
+.deadline{
+  margin-top:1.6rem;padding:.95rem 0;border-top:1px solid var(--rule-dk);
+  border-bottom:1px solid var(--rule-dk);font-size:.93rem;color:var(--ink);
+}
+.deadline b{font-weight:600}
+.deadline span{display:block;color:var(--mid);font-size:.88rem;margin-top:.15rem}
+
+/* ---- section furniture ---- */
+section{margin-top:2.9rem}
+.kicker{
+  font-size:.66rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--red);margin-bottom:.55rem;
+}
+h2{
+  font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.42rem;
+  line-height:1.2;letter-spacing:-.012em;margin-bottom:.6rem;
+}
+.note{color:var(--mid);font-size:.96rem;max-width:46ch}
+
+/* ---- the holidays, set as a list rather than chips ---- */
+.mon{
+  font-size:.64rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--quiet);margin:1.5rem 0 .5rem;padding-bottom:.3rem;
+  border-bottom:1px solid var(--rule);
+}
+.hols{
+  columns:2;column-gap:1.8rem;font-family:'Spectral',Georgia,serif;font-size:.97rem;
+  line-height:1.5;
+}
+.hols div{break-inside:avoid;margin-bottom:.3rem}
+.hols i{font-style:italic;color:var(--quiet);font-size:.88em}
+@media (max-width:34rem){ .hols{columns:1} }
+
+/* ---- examples ---- */
+.ideas{margin-top:1rem}
+.ideas li{
+  list-style:none;font-family:'Spectral',Georgia,serif;font-size:1rem;
+  padding-left:1.3rem;text-indent:-1.3rem;margin-bottom:.42rem;color:var(--ink);
+}
+.ideas li::before{content:"— ";color:var(--gold)}
+.fine{color:var(--quiet);font-size:.88rem;margin-top:.9rem;max-width:44ch}
+
+/* ---- memoriam ---- */
+.memory{border-left:2px solid var(--gold);padding-left:1.15rem}
+.memory p{font-family:'Spectral',Georgia,serif;font-size:1rem;color:var(--mid);max-width:46ch}
+
+/* ---- form ---- */
+form{
+  background:var(--card);border:1px solid var(--rule-dk);
+  padding:2rem 1.8rem;margin-top:1.3rem;
+}
+@media (max-width:30rem){ form{padding:1.5rem 1.2rem} }
+.fld{margin-bottom:1.6rem}
+label{
+  display:block;font-size:.66rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mid);margin-bottom:.45rem;
+}
+label .opt{font-weight:400;color:var(--quiet);text-transform:none;letter-spacing:.02em}
 input[type=text],input[type=email],textarea,select{
-  width:100%;font:inherit;font-size:.98rem;color:var(--ink);
-  background:var(--sunk);border:1px solid var(--line);padding:.65rem .75rem;
-  border-radius:0;
+  width:100%;font:inherit;font-size:1rem;color:var(--ink);
+  background:transparent;border:0;border-bottom:1px solid var(--rule-dk);
+  padding:.5rem .1rem;border-radius:0;
 }
-textarea{min-height:4.5rem;resize:vertical}
-input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,.drop:focus-visible{
-  outline:2px solid var(--red);outline-offset:2px}
-.hint{font-size:.82rem;color:var(--quiet);margin-top:.3rem}
+select{padding-left:0}
+textarea{min-height:4.2rem;resize:vertical;line-height:1.55}
+input::placeholder,textarea::placeholder{color:#B4B0A9}
+input:focus,textarea:focus,select:focus{outline:0;border-bottom-color:var(--red)}
+input:focus-visible,textarea:focus-visible,select:focus-visible{border-bottom-width:2px}
+button:focus-visible,.drop:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.hint{font-size:.81rem;color:var(--quiet);margin-top:.35rem}
 
 .drop{
-  border:2px dashed var(--line);background:var(--sunk);
-  padding:1.6rem 1rem;text-align:center;cursor:pointer;display:block;
+  border:1px dashed var(--rule-dk);background:#FCFBFA;
+  padding:1.5rem 1rem;text-align:center;cursor:pointer;display:block;
   transition:border-color .15s,background .15s;
 }
-.drop:hover,.drop.over{border-color:var(--red);background:var(--card)}
-.drop b{display:block;font-size:1rem;margin-bottom:.2rem}
-.drop span{font-size:.86rem;color:var(--quiet)}
+.drop:hover,.drop.over{border-color:var(--red);background:#fff}
+.drop b{display:block;font-family:'Spectral',Georgia,serif;font-size:1.05rem;font-weight:600;margin-bottom:.2rem}
+.drop span{font-size:.84rem;color:var(--quiet)}
 input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 
-.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.5rem,1fr));gap:.5rem;margin-top:.8rem}
-.thumb{position:relative;aspect-ratio:1;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(5.2rem,1fr));gap:.45rem;margin-top:.8rem}
+.thumb{position:relative;aspect-ratio:1;background:#F4F2EF;border:1px solid var(--rule);overflow:hidden}
 .thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
 .thumb button{
-  position:absolute;top:2px;right:2px;width:22px;height:22px;
-  background:rgba(0,0,0,.72);color:#fff;border:0;cursor:pointer;
+  position:absolute;top:0;right:0;width:22px;height:22px;
+  background:rgba(26,29,32,.78);color:#fff;border:0;cursor:pointer;
   font:inherit;font-size:14px;line-height:1;
 }
 
+.consent{display:flex;gap:.7rem;align-items:flex-start;padding:1rem 0;
+         border-top:1px solid var(--rule);margin-bottom:1.3rem}
+.consent input{width:17px;height:17px;flex:none;margin-top:.22rem;accent-color:var(--red)}
+.consent label{font-size:.86rem;font-weight:400;letter-spacing:0;text-transform:none;
+               line-height:1.5;margin:0;color:var(--mid)}
+
 button.go{
   width:100%;background:var(--red);color:#fff;border:0;
-  font:inherit;font-weight:600;font-size:1rem;padding:.85rem 1rem;cursor:pointer;
+  font:inherit;font-weight:600;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:1rem;cursor:pointer;transition:background .15s;
 }
 button.go:hover:not(:disabled){background:var(--red-dk)}
-button.go:disabled{opacity:.5;cursor:not-allowed}
+button.go:disabled{background:var(--rule-dk);cursor:not-allowed}
 
-.msg{margin-top:1rem;padding:.85rem 1rem;font-size:.94rem;border-left:4px solid}
-.msg.ok{background:var(--sunk);border-color:var(--ok);color:var(--ink)}
-.msg.err{background:var(--sunk);border-color:var(--red);color:var(--ink)}
-
-/* mine */
-.mine{margin-top:2.4rem}
-.mine h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.25rem;margin-bottom:.2rem}
-.mine .sub{color:var(--quiet);font-size:.9rem;margin-bottom:1rem}
-.rows{display:grid;gap:.6rem}
-.row{display:grid;grid-template-columns:4.5rem 1fr;gap:.9rem;background:var(--card);border:1px solid var(--line);padding:.7rem;min-width:0}
-.row .ph{aspect-ratio:1;background:var(--sunk);overflow:hidden}
-.row .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.row .meta{min-width:0}
-.row .cap{font-size:.94rem;margin-bottom:.2rem;overflow-wrap:anywhere}
-.row .who{font-size:.82rem;color:var(--quiet)}
-.row .tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-top:.25rem}
-.empty{background:var(--card);border:1px dashed var(--line);padding:1.5rem;text-align:center;color:var(--quiet);font-size:.92rem}
-
-/* the deadline */
-.deadline{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
-          padding:.75rem .95rem;margin-top:1.1rem;font-size:.93rem;color:var(--ink);
-          box-shadow:0 1px 2px rgba(17,21,24,.05)}
-
-/* in memoriam */
-.memory{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
-        padding:1rem 1.1rem;margin-top:1rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
-.memory h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.1rem;margin-bottom:.35rem}
-.memory p{font-size:.93rem;color:var(--mid)}
-
-/* what to send */
-.ideas{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
-       padding:1rem 1.1rem;margin-top:1rem;box-shadow:0 1px 2px rgba(17,21,24,.05)}
-.ideas h2{font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-          color:var(--mid);margin-bottom:.55rem}
-.ideas ul{list-style:none;margin:0}
-.ideas li{font-size:.93rem;color:var(--ink);padding-left:1.1rem;position:relative;margin-bottom:.34rem}
-.ideas li:last-child{margin-bottom:0}
-.ideas li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--red)}
-.ideas .fine{color:var(--quiet);font-size:.86rem;margin-top:.7rem}
-
-/* consent */
-.consent{display:flex;gap:.6rem;align-items:flex-start;background:var(--sunk);
-         border:1px solid var(--line);padding:.8rem .9rem;margin-bottom:1.1rem}
-.consent input{width:18px;height:18px;flex:none;margin-top:.1rem;accent-color:var(--red)}
-.consent label{font-size:.88rem;font-weight:400;letter-spacing:0;line-height:1.45;margin:0;color:var(--ink)}
-
-/* the three most recent approved photos */
-.recent{margin-top:2.4rem}
-.recent h2{font-family:'Spectral',Georgia,serif;font-weight:600;font-size:1.25rem;margin-bottom:.2rem}
-.recent .sub{color:var(--quiet);font-size:.9rem;margin-bottom:1rem}
-.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));gap:.7rem}
-.card{background:var(--card);border:1px solid var(--line);min-width:0;
-      box-shadow:0 1px 2px rgba(17,21,24,.05)}
-.card .ph{aspect-ratio:4/3;background:var(--sunk);overflow:hidden}
-.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.card .txt{padding:.6rem .7rem}
-.card .cap{font-size:.86rem;line-height:1.35;overflow-wrap:anywhere}
-.card .who{font-size:.76rem;color:var(--quiet);margin-top:.25rem}
-
-/* email fallback path */
-.mailcard{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--red);padding:1.4rem 1.3rem;margin-top:1.5rem}
-.mailcard h2{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:1.3rem;margin-bottom:.4rem}
-.mailcard p{color:var(--mid);font-size:.95rem}
-.mailcard ol{margin:.9rem 0 1.1rem 1.2rem;color:var(--ink);font-size:.95rem}
-.mailcard ol li{margin-bottom:.3rem;padding-left:.2rem}
-.mailbtn{
-  display:block;text-align:center;background:var(--red);color:#fff;text-decoration:none;
-  font-weight:600;font-size:1rem;padding:.85rem 1rem;
-}
-.mailbtn:hover{background:var(--red-dk)}
-.alt{text-align:center;font-size:.86rem;color:var(--quiet);margin-top:.9rem}
+.msg{margin-top:1rem;padding:.8rem 0;font-size:.92rem;border-top:2px solid var(--ink)}
+.msg.err{border-top-color:var(--red)}
+.alt{text-align:center;font-size:.85rem;color:var(--quiet);margin-top:1rem}
 .alt a{color:var(--red)}
 
-footer{margin-top:2.6rem;padding-top:1.1rem;border-top:1px solid var(--line);color:var(--quiet);font-size:.84rem}
+/* ---- submissions, gallery, email path ---- */
+.rows{display:grid;gap:.5rem;margin-top:1rem}
+.row{display:grid;grid-template-columns:4rem 1fr;gap:1rem;background:var(--card);
+     border:1px solid var(--rule);padding:.65rem;min-width:0}
+.row .ph{aspect-ratio:1;background:#F4F2EF;overflow:hidden}
+.row .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.row .meta{min-width:0}
+.row .cap{font-family:'Spectral',Georgia,serif;font-size:.95rem;overflow-wrap:anywhere}
+.row .who{font-size:.78rem;color:var(--quiet);margin-top:.2rem}
+.empty{border:1px dashed var(--rule-dk);padding:1.4rem;text-align:center;
+       color:var(--quiet);font-size:.9rem;margin-top:1rem}
+
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));gap:.9rem;margin-top:1rem}
+.card{background:var(--card);border:1px solid var(--rule);min-width:0}
+.card .ph{aspect-ratio:4/3;background:#F4F2EF;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .txt{padding:.65rem .7rem}
+.card .cap{font-family:'Spectral',Georgia,serif;font-size:.88rem;line-height:1.4;overflow-wrap:anywhere}
+.card .who{font-size:.74rem;color:var(--quiet);margin-top:.25rem}
+
+.mailcard{background:var(--card);border:1px solid var(--rule-dk);padding:1.8rem 1.6rem;margin-top:1.3rem}
+.mailcard ol{margin:1rem 0 1.3rem 1.2rem;font-family:'Spectral',Georgia,serif;font-size:1rem}
+.mailcard ol li{margin-bottom:.32rem;padding-left:.2rem}
+.mailbtn{
+  display:block;text-align:center;background:var(--red);color:#fff;text-decoration:none;
+  font-weight:600;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:1rem;
+}
+.mailbtn:hover{background:var(--red-dk)}
+
+/* ---- weather, kept quiet, down here ---- */
+.wxwrap{margin-top:3.2rem;padding-top:1.2rem;border-top:1px solid var(--rule)}
+.wxlab{font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+       color:var(--quiet);margin-bottom:.5rem}
+.wxbar{display:flex;flex-wrap:wrap;gap:.1rem .3rem;align-items:baseline}
+.wxbar button{
+  font:inherit;font-size:.84rem;font-family:'Spectral',Georgia,serif;
+  background:none;border:0;padding:.15rem .35rem;cursor:pointer;color:var(--quiet);
+  border-bottom:1px solid transparent;transition:color .15s,border-color .15s;
+}
+.wxbar button:hover{color:var(--ink)}
+.wxbar button.on{color:var(--ink);border-bottom-color:var(--red)}
+.wxbar .sep{color:var(--rule-dk);font-size:.8rem}
+
+/* ---- sign-off ---- */
+footer{margin-top:2.6rem;padding-top:1.3rem;border-top:1px solid var(--rule-dk)}
+.sig{font-family:'Spectral',Georgia,serif;font-size:1rem;color:var(--ink)}
+.sig span{display:block;font-family:'IBM Plex Sans',sans-serif;font-size:.82rem;
+          color:var(--mid);margin-top:.15rem;line-height:1.45}
+footer .fine{margin-top:1.1rem;font-size:.8rem;color:var(--quiet);max-width:52ch}
 footer a{color:var(--red)}
 </style>
 
@@ -223,206 +236,218 @@ footer a{color:var(--red)}
 
 <div class="wrap">
 
-  <p class="wxintro">Set the weather to match your own &mdash; wherever in the world
-  you are reading this.</p>
-
-  <div class="wxbar" id="wxbar" role="group" aria-label="Choose your weather">
-    <span class="wxlab"><i></i>Your weather</span>
-    <button type="button" data-w="auto" class="on" aria-label="Let the weather change on its own">Auto</button>
-    <button type="button" data-w="0" aria-label="Snowfall">Snow</button>
-    <button type="button" data-w="1" aria-label="Light flurries">Flurries</button>
-    <button type="button" data-w="2" aria-label="Blowing snow">Blowing</button>
-    <button type="button" data-w="3" aria-label="Sleet">Sleet</button>
-    <button type="button" data-w="4" aria-label="Clear and cold">Clear</button>
-    <button type="button" data-w="5" aria-label="Winter sunshine">Sunshine</button>
-  </div>
+  <p class="eyebrow">Newsletter Issue III &middot; January 31, 2027</p>
 
   <div class="head">
     <div class="mark">4A</div>
     <div>
-      <p class="org">African American Alumni Association of Illinois Tech</p>
-      <h1>Holiday Photos</h1>
+      <p class="org">African American Alumni Association<br>of Illinois Tech</p>
+      <h1>Holiday Photographs</h1>
     </div>
   </div>
 
-  <p class="lede">However your family marks the season, we would be glad to see it. This call is
-  open to every IIT-4A member, to our students, and to the friends and families who sit at your
-  table. Selected photographs and short videos will appear in Newsletter Issue III, published
-  January 31.</p>
+  <div class="rule gold"></div>
 
-  <p class="deadline"><b>Submissions close Saturday, January 30, 2027 at midnight.</b>
-  Photographs and short videos &mdash; about a minute is plenty &mdash; are both welcome.</p>
+  <p class="lede">However your family marks this season, we would be glad to see it.</p>
+  <p class="lede">This call is open to every member of the association, to our students,
+  and to the friends and families who sit at your table. Selected photographs and short
+  videos will appear in Newsletter Issue III.</p>
 
-  <div class="season">
+  <p class="deadline"><b>Submissions close Saturday, January 30, 2027, at midnight.</b>
+  <span>Photographs and short videos are both welcome. Every submission is reviewed by the
+  editor before publication.</span></p>
+
+  <section>
+    <p class="kicker">What counts</p>
     <h2>Any holiday, Thanksgiving through King Day</h2>
-    <p>Our alumni celebrate all over the world. If your holiday is on this list &mdash;
-    or if it isn't &mdash; we want the picture.</p>
+    <p class="note">Our alumni celebrate all over the world. If your holiday appears
+    below &mdash; or if it does not &mdash; we would like the photograph.</p>
 
     <p class="mon">Late November</p>
     <div class="hols">
-      <span>Thanksgiving <em>&middot; US</em></span>
-      <span>Native American Heritage Day <em>&middot; US</em></span>
-      <span>St. Andrew's Day <em>&middot; Scotland</em></span>
-      <span>Advent begins</span>
+      <div>Thanksgiving <i>United States</i></div>
+      <div>Native American Heritage Day <i>United States</i></div>
+      <div>St. Andrew's Day <i>Scotland</i></div>
+      <div>The first Sunday of Advent</div>
     </div>
 
     <p class="mon">December</p>
     <div class="hols">
-      <span>Bodhi Day <em>&middot; Buddhist</em></span>
-      <span>Hanukkah <em>&middot; Jewish</em></span>
-      <span>Santa Lucia <em>&middot; Scandinavia</em></span>
-      <span>Las Posadas <em>&middot; Mexico</em></span>
-      <span>Winter Solstice &amp; Yule</span>
-      <span>Nochebuena <em>&middot; Latin America</em></span>
-      <span>Christmas</span>
-      <span>Boxing Day <em>&middot; Commonwealth</em></span>
-      <span>Day of Goodwill <em>&middot; South Africa</em></span>
-      <span>Junkanoo <em>&middot; Bahamas &amp; Caribbean</em></span>
-      <span>Kwanzaa</span>
-      <span>Watch Night</span>
-      <span>Hogmanay <em>&middot; Scotland</em></span>
-      <span>Omisoka <em>&middot; Japan</em></span>
+      <div>Bodhi Day <i>Buddhist</i></div>
+      <div>Hanukkah <i>Jewish</i></div>
+      <div>Santa Lucia <i>Scandinavia</i></div>
+      <div>Las Posadas <i>Mexico</i></div>
+      <div>The Winter Solstice and Yule</div>
+      <div>Nochebuena <i>Latin America</i></div>
+      <div>Christmas</div>
+      <div>Boxing Day <i>Commonwealth</i></div>
+      <div>Day of Goodwill <i>South Africa</i></div>
+      <div>Junkanoo <i>Bahamas and the Caribbean</i></div>
+      <div>Kwanzaa</div>
+      <div>Watch Night</div>
+      <div>Hogmanay <i>Scotland</i></div>
+      <div>&#332;misoka <i>Japan</i></div>
     </div>
 
     <p class="mon">January</p>
     <div class="hols">
-      <span>New Year's Day</span>
-      <span>Emancipation &amp; Jubilee Day <em>&middot; US</em></span>
-      <span>Haitian Independence Day</span>
-      <span>Ancestors' Day <em>&middot; Haiti</em></span>
-      <span>Three Kings Day &middot; D&iacute;a de Reyes</span>
-      <span>Epiphany</span>
-      <span>Ganna <em>&middot; Ethiopian Christmas</em></span>
-      <span>Coptic Christmas <em>&middot; Egypt</em></span>
-      <span>Orthodox Christmas</span>
-      <span>Lohri <em>&middot; Punjab</em></span>
-      <span>Makar Sankranti &amp; Pongal <em>&middot; India</em></span>
-      <span>Seollal preparations <em>&middot; Korea</em></span>
-      <span>Timkat <em>&middot; Ethiopia</em></span>
-      <span>Dr. Martin Luther King Jr. Day</span>
+      <div>New Year's Day</div>
+      <div>Emancipation and Jubilee Day <i>United States</i></div>
+      <div>Haitian Independence Day</div>
+      <div>Ancestors' Day <i>Haiti</i></div>
+      <div>Three Kings Day &middot; D&iacute;a de Reyes</div>
+      <div>Epiphany</div>
+      <div>Ganna <i>Ethiopian Christmas</i></div>
+      <div>Coptic Christmas <i>Egypt</i></div>
+      <div>Orthodox Christmas</div>
+      <div>Lohri <i>Punjab</i></div>
+      <div>Makar Sankranti and Pongal <i>India</i></div>
+      <div>Preparations for Seollal <i>Korea</i></div>
+      <div>Timkat <i>Ethiopia</i></div>
+      <div>Dr. Martin Luther King Jr. Day</div>
     </div>
 
-    <p class="list">Students and alumni both, anywhere in the world. Family tables, church,
-    service days, kitchens, travel, reunions, a quiet morning &mdash; whatever the season
-    looks like for you. If we have missed your holiday, name it in the caption and we will
-    name it in the newsletter.</p>
-  </div>
+    <p class="fine">If we have missed your holiday, name it in the caption and we will name
+    it in the newsletter.</p>
+  </section>
 
-  <div class="ideas">
-    <h2>Not sure what to send?</h2>
-    <ul>
-      <li>The table before anyone sits down, or right after everyone has.</li>
+  <section>
+    <p class="kicker">Suggestions</p>
+    <h2>If you are not sure what to send</h2>
+    <ul class="ideas">
+      <li>The table before anyone sits down, or immediately after everyone has.</li>
       <li>Four generations in one frame &mdash; the grandparents and the newest baby.</li>
       <li>Your grandmother's hands, or the one dish that has to be on the table.</li>
-      <li>The Kwanzaa kinara, the menorah, the tree, the altar, the church pew.</li>
+      <li>The kinara, the menorah, the tree, the altar, the church pew.</li>
       <li>Serving a meal, packing boxes, or a King Day march.</li>
-      <li>The airport reunion, the driveway hug, the group shot nobody was ready for.</li>
+      <li>The airport reunion, the driveway embrace, the group photograph nobody was ready for.</li>
       <li>Your Illinois Tech sweatshirt somewhere warm.</li>
-      <li>A short video &mdash; the blessing, the music, a greeting to the 4A community.</li>
+      <li>A short video &mdash; the blessing, the music, a greeting to the association.</li>
     </ul>
-    <p class="fine">Phone photos are welcome. Send the largest version your phone will give you &mdash;
-    print needs the detail.</p>
-  </div>
+    <p class="fine">Photographs taken on a telephone are entirely welcome. Please send the
+    largest version your device will give you; print needs the detail.</p>
+  </section>
 
   <section class="memory">
     <h2>If this season carries a loss</h2>
-    <p>Many of us will set a place this year for someone who is no longer at the table. If you
-    would like to share a holiday photograph of someone you have lost, please do. We will run it
-    with the care it deserves, and the community will hold that memory with you.</p>
+    <p>Many of us will set a place this year for someone who is no longer at the table. If
+    you would like to share a holiday photograph of someone you have lost, please do. We will
+    publish it with the care it deserves, and the association will hold that memory with you.</p>
   </section>
 
-  <form id="f" novalidate>
-    <div class="fld">
-      <label for="nm">Your name or family name</label>
-      <input type="text" id="nm" name="nm" autocomplete="name" placeholder="The Martin Family">
-    </div>
+  <section>
+    <p class="kicker">Submit</p>
+    <h2>Send us your photograph</h2>
 
-    <div class="fld">
-      <label for="em">Email</label>
-      <input type="email" id="em" name="em" autocomplete="email" placeholder="you@example.com">
-      <p class="hint">So we can reach you if your photo is selected. Never published.</p>
-    </div>
+    <form id="f" novalidate>
+      <div class="fld">
+        <label for="nm">Your name or family name</label>
+        <input type="text" id="nm" name="nm" autocomplete="name" placeholder="The Martin Family">
+      </div>
 
-    <div class="fld">
-      <label for="hol">Which holiday</label>
-      <select id="hol" name="hol">
-        <option value="">Choose one…</option>
-        <optgroup label="Late November">
-          <option>Thanksgiving</option>
-          <option>Native American Heritage Day</option>
-          <option>St. Andrew's Day</option>
-          <option>Advent</option>
-        </optgroup>
-        <optgroup label="December">
-          <option>Bodhi Day</option>
-          <option>Hanukkah</option>
-          <option>Santa Lucia</option>
-          <option>Las Posadas</option>
-          <option>Winter Solstice / Yule</option>
-          <option>Nochebuena</option>
-          <option>Christmas</option>
-          <option>Boxing Day</option>
-          <option>Day of Goodwill</option>
-          <option>Junkanoo</option>
-          <option>Kwanzaa</option>
-          <option>Watch Night</option>
-          <option>Hogmanay / New Year's Eve</option>
-          <option>Omisoka</option>
-        </optgroup>
-        <optgroup label="January">
-          <option>New Year's Day</option>
-          <option>Emancipation / Jubilee Day</option>
-          <option>Haitian Independence Day</option>
-          <option>Ancestors' Day</option>
-          <option>Three Kings Day / Día de Reyes</option>
-          <option>Epiphany</option>
-          <option>Ganna (Ethiopian Christmas)</option>
-          <option>Coptic Christmas</option>
-          <option>Orthodox Christmas</option>
-          <option>Lohri</option>
-          <option>Makar Sankranti / Pongal</option>
-          <option>Seollal preparations</option>
-          <option>Timkat</option>
-          <option>Dr. Martin Luther King Jr. Day</option>
-        </optgroup>
-        <optgroup label="Other">
-          <option>More than one / the whole season</option>
-          <option>Another holiday — I'll name it in the caption</option>
-        </optgroup>
-      </select>
-    </div>
+      <div class="fld">
+        <label for="em">Email address</label>
+        <input type="email" id="em" name="em" autocomplete="email" placeholder="you@example.com">
+        <p class="hint">So that we may reach you if your photograph is selected. Never published.</p>
+      </div>
 
-    <div class="fld">
-      <label for="cap">Short caption <span class="opt">— one or two lines</span></label>
-      <textarea id="cap" name="cap" maxlength="280" placeholder="Four generations at my mother's table in Bronzeville, Thanksgiving 2026."></textarea>
-      <p class="hint"><span id="cc">0</span>/280</p>
-    </div>
+      <div class="fld">
+        <label for="hol">Which holiday</label>
+        <select id="hol" name="hol">
+          <option value="">Please choose&hellip;</option>
+          <optgroup label="Late November">
+            <option>Thanksgiving</option>
+            <option>Native American Heritage Day</option>
+            <option>St. Andrew's Day</option>
+            <option>Advent</option>
+          </optgroup>
+          <optgroup label="December">
+            <option>Bodhi Day</option>
+            <option>Hanukkah</option>
+            <option>Santa Lucia</option>
+            <option>Las Posadas</option>
+            <option>Winter Solstice / Yule</option>
+            <option>Nochebuena</option>
+            <option>Christmas</option>
+            <option>Boxing Day</option>
+            <option>Day of Goodwill</option>
+            <option>Junkanoo</option>
+            <option>Kwanzaa</option>
+            <option>Watch Night</option>
+            <option>Hogmanay / New Year's Eve</option>
+            <option>&#332;misoka</option>
+          </optgroup>
+          <optgroup label="January">
+            <option>New Year's Day</option>
+            <option>Emancipation / Jubilee Day</option>
+            <option>Haitian Independence Day</option>
+            <option>Ancestors' Day</option>
+            <option>Three Kings Day / D&iacute;a de Reyes</option>
+            <option>Epiphany</option>
+            <option>Ganna (Ethiopian Christmas)</option>
+            <option>Coptic Christmas</option>
+            <option>Orthodox Christmas</option>
+            <option>Lohri</option>
+            <option>Makar Sankranti / Pongal</option>
+            <option>Seollal preparations</option>
+            <option>Timkat</option>
+            <option>Dr. Martin Luther King Jr. Day</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option>More than one, or the whole season</option>
+            <option>Another holiday &mdash; I will name it in the caption</option>
+          </optgroup>
+        </select>
+      </div>
 
-    <div class="consent">
-      <input type="checkbox" id="ok" name="ok">
-      <label for="ok">I took this photograph or video, or I have permission from whoever did, and everyone
-      recognisable in it is content to appear. IIT-4A may publish it, with my caption and the
-      name I gave, in Newsletter Issue III and on its channels.</label>
-    </div>
+      <div class="fld">
+        <label for="cap">Caption <span class="opt">one or two lines</span></label>
+        <textarea id="cap" name="cap" maxlength="280" placeholder="Four generations at my mother's table in Bronzeville, Thanksgiving 2026."></textarea>
+        <p class="hint"><span id="cc">0</span>/280</p>
+      </div>
 
-    <button class="go" id="go" type="submit">Attach my photos and send</button>
-    <div class="msg err" id="msg" hidden></div>
-    <p class="alt">This opens an email to the editor with your details already filled in.
-    Attach your photographs or short video there and send.</p>
-  </form>
+      <div class="consent">
+        <input type="checkbox" id="ok" name="ok">
+        <label for="ok">I took this photograph or video, or I have permission from whoever did,
+        and everyone recognisable in it is content to appear. IIT-4A may publish it, with my
+        caption and the name I have given, in Newsletter Issue III and on its channels.</label>
+      </div>
+
+      <button class="go" id="go" type="submit">Send my submission</button>
+      <div class="msg" id="msg" hidden></div>
+      <p class="alt">This opens an email to the editor with your details already entered.
+      Attach your photographs or short video there and send.</p>
+    </form>
+  </section>
+
+  <div class="wxwrap">
+    <p class="wxlab">Weather</p>
+    <div class="wxbar" id="wxbar" role="group" aria-label="Choose the weather on this page">
+      <button type="button" data-w="auto" class="on" aria-label="Let the weather change on its own">Auto</button><span class="sep">/</span>
+      <button type="button" data-w="0">Snow</button><span class="sep">/</span>
+      <button type="button" data-w="1">Flurries</button><span class="sep">/</span>
+      <button type="button" data-w="2">Blowing</button><span class="sep">/</span>
+      <button type="button" data-w="3">Sleet</button><span class="sep">/</span>
+      <button type="button" data-w="4">Clear</button><span class="sep">/</span>
+      <button type="button" data-w="5">Sunshine</button>
+    </div>
+  </div>
 
   <footer>
-    Questions, or trouble uploading? Email
+    <p class="sig">Dr. Freddrick Logan
+      <span>Recording Secretary &amp; Editor<br>African American Alumni Association of Illinois Tech</span>
+    </p>
+    <p class="fine">Questions, or difficulty uploading? Write to
     <a href="mailto:iit4a.records@gmail.com">iit4a.records@gmail.com</a>.
-    Every photo is reviewed by the editor before it appears anywhere. Your email address is
-    only used to reach you about your submission, and is never published.
+    Every photograph is reviewed by the editor before it appears anywhere. Your email address
+    is used only to reach you about your submission, and is never published.</p>
   </footer>
 
 </div>
 
 <script>
 var $ = function(id){ return document.getElementById(id); };
-function show(t){ var m=$('msg'); m.textContent=t; m.hidden=false; }
+function show(t){ var m=$('msg'); m.className='msg err'; m.textContent=t; m.hidden=false; }
 $('cap').addEventListener('input', function(e){ $('cc').textContent = e.target.value.length; });
 
 $('f').addEventListener('submit', function(e){
@@ -430,22 +455,22 @@ $('f').addEventListener('submit', function(e){
   var nm = $('nm').value.trim(), em = $('em').value.trim();
   var hol = $('hol').value, cap = $('cap').value.trim();
   if (!nm){ show('Please add your name or family name.'); $('nm').focus(); return; }
-  if (!$('ok').checked){ show('Please tick the permission box so we know we may publish your photo.'); $('ok').focus(); return; }
+  if (!$('ok').checked){ show('Please tick the permission box so that we know we may publish your photograph.'); $('ok').focus(); return; }
   $('msg').hidden = true;
   var body = 'Name or family name: ' + nm
            + '\n\nEmail: ' + em
            + '\n\nHoliday: ' + hol
            + '\n\nCaption: ' + cap
-           + '\n\nI confirm I may share this and that IIT-4A may publish it with my caption and name.'
-           + '\n\n\u2014 Photographs or short video attached. Thank you!\n';
+           + '\n\nI confirm that I may share this, and that IIT-4A may publish it with my caption and the name above.'
+           + '\n\n\u2014 Photographs or short video attached. Thank you.\n';
   window.location.href = 'mailto:iit4a.records@gmail.com'
-    + '?subject=' + encodeURIComponent('Holiday photo submission \u2014 IIT-4A Issue III')
+    + '?subject=' + encodeURIComponent('Holiday photograph submission \u2014 IIT-4A Issue III')
     + '&body=' + encodeURIComponent(body);
 });
 
 // ---- winter weather ---------------------------------------------------
-// One canvas, six conditions. The scene changes on its own every ~19s and
-// each flake re-rolls on its own small delay, so the turn is gradual.
+// One canvas, six conditions, deliberately restrained. It turns over on its own
+// every ~22s unless the reader pins one.
 (function(){
   var cv = document.getElementById('sky');
   if (!cv || !cv.getContext) return;
@@ -453,19 +478,18 @@ $('f').addEventListener('submit', function(e){
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var WX = [
-    { key:'snow',   label:'Snowfall',       n:150, vy:[20, 58],  vx:[-8, 8],    r:[1.2, 3.3], sway:[.4, .9],  streak:0 },
-    { key:'flurry', label:'Light flurries', n:48,  vy:[10, 26],  vx:[-14, 14],  r:[1.0, 2.2], sway:[.9, 1.8], streak:0 },
-    { key:'blow',   label:'Blowing snow',   n:185, vy:[20, 46],  vx:[52, 104],  r:[.8, 2.3],  sway:[.2, .6],  streak:1.5 },
-    { key:'sleet',  label:'Sleet',          n:205, vy:[170, 275],vx:[-26, -10], r:[.5, 1.1],  sway:[0, 0],    streak:7 },
-    { key:'clear',  label:'Clear and cold', n:26,  vy:[4, 13],   vx:[-5, 5],    r:[.9, 2.0],  sway:[1.2, 2.2],streak:0 },
-    { key:'sun',    label:'Winter sun',     n:14,  vy:[2, 9],    vx:[-4, 4],    r:[.7, 1.7],  sway:[1.0, 2.4],streak:0, sun:1 }
+    { key:'snow',   label:'Snowfall',       n:78,  vy:[18, 50],  vx:[-7, 7],    r:[1.1, 2.9], sway:[.4, .9],  streak:0 },
+    { key:'flurry', label:'Light flurries', n:28,  vy:[9, 24],   vx:[-12, 12],  r:[1.0, 2.1], sway:[.9, 1.7], streak:0 },
+    { key:'blow',   label:'Blowing snow',   n:95,  vy:[18, 42],  vx:[46, 92],   r:[.8, 2.1],  sway:[.2, .6],  streak:1.4 },
+    { key:'sleet',  label:'Sleet',          n:110, vy:[150, 245],vx:[-24, -9],  r:[.5, 1.0],  sway:[0, 0],    streak:6.5 },
+    { key:'clear',  label:'Clear and cold', n:16,  vy:[4, 12],   vx:[-5, 5],    r:[.9, 1.9],  sway:[1.2, 2.1],streak:0 },
+    { key:'sun',    label:'Winter sun',     n:10,  vy:[2, 8],    vx:[-4, 4],    r:[.7, 1.6],  sway:[1.0, 2.3],streak:0, sun:1 }
   ];
-  var wi = 0, cur = WX[0], live = cur.n, W = 0, H = 0, dpr = 1, snow = 'rgba(120,140,160,.5)';
-  var glow = 'rgba(255,201,110,.7)', sunAmt = 0;
-  var POOL = 210, P = [];
+  var wi = 0, cur = WX[0], live = cur.n, W = 0, H = 0, dpr = 1;
+  var snow = 'rgba(92,102,114,.24)', glow = 'rgba(255,206,128,.55)', sunAmt = 0;
+  var POOL = 120, P = [];
 
   function rnd(a){ return a[0] + Math.random() * (a[1] - a[0]); }
-
   function roll(p, w){
     p.vy = rnd(w.vy); p.vx = rnd(w.vx); p.r = rnd(w.r);
     p.sw = rnd(w.sway); p.st = w.streak; p.wx = w.key;
@@ -478,16 +502,16 @@ $('f').addEventListener('submit', function(e){
       roll(p, cur); P.push(p);
     }
   }
-  function readSnow(){
+  function readTokens(){
     var cs = getComputedStyle(document.documentElement);
-    var v = cs.getPropertyValue('--snow').trim();      if (v) snow = v;
-    var g = cs.getPropertyValue('--sunglow').trim();   if (g) glow = g;
+    var v = cs.getPropertyValue('--snow').trim();     if (v) snow = v;
+    var g = cs.getPropertyValue('--sunglow').trim();  if (g) glow = g;
   }
-  // same colour, no alpha — for the outer stop of the sun's gradient
-  function fade(c){ return c.replace(/rgba?\(([^)]+)\)/, function(m, inner){
-    var n = inner.split(',').slice(0,3).join(',');
-    return 'rgba(' + n + ',0)';
-  }); }
+  function fade(c){
+    return c.replace(/rgba?\(([^)]+)\)/, function(m, inner){
+      return 'rgba(' + inner.split(',').slice(0,3).join(',') + ',0)';
+    });
+  }
   function size(){
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = cv.clientWidth; H = cv.clientHeight;
@@ -498,10 +522,9 @@ $('f').addEventListener('submit', function(e){
   function draw(dt, t){
     cx.clearRect(0, 0, W, H);
 
-    // a low winter sun, high and to the right — fades in on the sunshine state
     sunAmt += ((cur.sun ? 1 : 0) - sunAmt) * Math.min(dt * 1.5, 1);
     if (sunAmt > .01){
-      var sx = W * 0.82, sy = H * 0.13, rad = Math.max(W, H) * 0.6;
+      var sx = W * 0.84, sy = H * 0.11, rad = Math.max(W, H) * 0.6;
       var rg = cx.createRadialGradient(sx, sy, 0, sx, sy, rad);
       rg.addColorStop(0, glow);
       rg.addColorStop(.38, fade(glow));
@@ -522,33 +545,21 @@ $('f').addEventListener('submit', function(e){
       if (p.x < -12) p.x = W + 10; else if (p.x > W + 12) p.x = -10;
       if (p.st){
         var k = p.st * dt;
-        cx.lineWidth = Math.max(.6, p.r * .9);
-        cx.beginPath();
-        cx.moveTo(p.x, p.y);
-        cx.lineTo(p.x - p.vx * k, p.y - p.vy * k);
-        cx.stroke();
+        cx.lineWidth = Math.max(.6, p.r * .85);
+        cx.beginPath(); cx.moveTo(p.x, p.y);
+        cx.lineTo(p.x - p.vx * k, p.y - p.vy * k); cx.stroke();
       } else {
-        cx.beginPath();
-        cx.arc(p.x, p.y, p.r, 0, 6.2832);
-        cx.fill();
+        cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.2832); cx.fill();
       }
     }
   }
 
-  // the viewer can pin a condition; "Auto" hands it back to the clock
-  var pinned = false;
-  var bar = document.getElementById('wxbar');
-
+  var pinned = false, bar = document.getElementById('wxbar');
   function setWx(i){
     wi = i; cur = WX[i];
     var now = performance.now();
-    for (var k = 0; k < P.length; k++) P[k].due = still ? 0 : now + Math.random() * 2400;
-    if (still){ live = cur.n; draw(0, now); }   // no animation loop to pick it up
-  }
-  function turn(){
-    if (pinned) return;
-    setWx((wi + 1) % WX.length);
-    mark('auto');
+    for (var k = 0; k < P.length; k++) P[k].due = still ? 0 : now + Math.random() * 2600;
+    if (still){ live = cur.n; draw(0, now); }
   }
   function mark(val){
     if (!bar) return;
@@ -559,6 +570,7 @@ $('f').addEventListener('submit', function(e){
       bs[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
   }
+  function turn(){ if (pinned) return; setWx((wi + 1) % WX.length); mark('auto'); }
   if (bar){
     bar.addEventListener('click', function(e){
       var b = e.target.closest ? e.target.closest('button[data-w]') : null;
@@ -569,8 +581,9 @@ $('f').addEventListener('submit', function(e){
     });
   }
 
-  size(); readSnow(); seed();
+  size(); readTokens(); seed();
   addEventListener('resize', function(){ size(); });
+
   if (still){ live = cur.n; draw(0, 0); return; }
 
   var last = performance.now();
@@ -580,7 +593,7 @@ $('f').addEventListener('submit', function(e){
     draw(dt, t);
     requestAnimationFrame(frame);
   })(last);
-  setInterval(turn, 19000);
+  setInterval(turn, 22000);
 })();
 
 </script>
