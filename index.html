@@ -111,6 +111,20 @@ h2{
 .ideas li::before{content:"— ";color:var(--gold)}
 .fine{color:var(--quiet);font-size:.88rem;margin-top:.9rem;max-width:44ch}
 
+/* ---- folded detail ---- */
+.more{margin-top:1rem}
+.more summary{
+  cursor:pointer;list-style:none;display:inline-block;
+  font-size:.74rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--red);padding-bottom:.18rem;border-bottom:1px solid var(--rule-dk);
+}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:" +";font-weight:400}
+.more[open] summary::after{content:" \2212"}
+.more summary:hover{border-bottom-color:var(--red)}
+.more > *:not(summary){margin-top:.2rem}
+.more .mon:first-of-type{margin-top:1.1rem}
+
 /* ---- memoriam ---- */
 .memory{border-left:2px solid var(--gold);padding-left:1.15rem}
 .memory p{font-family:'Spectral',Georgia,serif;font-size:1rem;color:var(--mid);max-width:46ch}
@@ -261,67 +275,70 @@ footer a{color:var(--red)}
 
   <div class="rule gold"></div>
 
-  <p class="lede">However your family marks this season, we would be glad to see it.</p>
-  <p class="lede">This call is open to every member of the association, to our students,
-  and to the friends and families who sit at your table. Selected photographs and short
-  videos will appear in Newsletter Issue III.</p>
+  <p class="lede">However your family marks this season, we would be glad to see it.
+  Members, students, and the friends and families at your table are all welcome to send
+  a photograph or a short video.</p>
 
   <p class="deadline"><b>Submissions close Saturday, January 30, 2027, at midnight.</b>
-  <span>Photographs and short videos are both welcome. Every submission is reviewed by the
-  editor before publication.</span></p>
+  <span>Selected photographs appear in Newsletter Issue III. Every submission is reviewed
+  by the editor first.</span></p>
 
   <section>
     <p class="kicker">What counts</p>
     <h2>Any holiday, Thanksgiving through King Day</h2>
-    <p class="note">Our alumni celebrate all over the world. If your holiday appears
-    below &mdash; or if it does not &mdash; we would like the photograph.</p>
+    <p class="note">Thanksgiving, Hanukkah, Christmas, Kwanzaa, Watch Night, New Year's,
+    Three Kings Day, King Day &mdash; and thirty others our alumni keep around the world.</p>
 
-    <p class="mon">Late November</p>
-    <div class="hols">
-      <div>Thanksgiving <i>United States</i></div>
-      <div>Native American Heritage Day <i>United States</i></div>
-      <div>St. Andrew's Day <i>Scotland</i></div>
-      <div>The first Sunday of Advent</div>
-    </div>
+    <details class="more">
+      <summary>See the full list</summary>
 
-    <p class="mon">December</p>
-    <div class="hols">
-      <div>Bodhi Day <i>Buddhist</i></div>
-      <div>Hanukkah <i>Jewish</i></div>
-      <div>Santa Lucia <i>Scandinavia</i></div>
-      <div>Las Posadas <i>Mexico</i></div>
-      <div>The Winter Solstice and Yule</div>
-      <div>Nochebuena <i>Latin America</i></div>
-      <div>Christmas</div>
-      <div>Boxing Day <i>Commonwealth</i></div>
-      <div>Day of Goodwill <i>South Africa</i></div>
-      <div>Junkanoo <i>Bahamas and the Caribbean</i></div>
-      <div>Kwanzaa</div>
-      <div>Watch Night</div>
-      <div>Hogmanay <i>Scotland</i></div>
-      <div>&#332;misoka <i>Japan</i></div>
-    </div>
+      <p class="mon">Late November</p>
+      <div class="hols">
+        <div>Thanksgiving <i>United States</i></div>
+        <div>Native American Heritage Day <i>United States</i></div>
+        <div>St. Andrew's Day <i>Scotland</i></div>
+        <div>The first Sunday of Advent</div>
+      </div>
 
-    <p class="mon">January</p>
-    <div class="hols">
-      <div>New Year's Day</div>
-      <div>Emancipation and Jubilee Day <i>United States</i></div>
-      <div>Haitian Independence Day</div>
-      <div>Ancestors' Day <i>Haiti</i></div>
-      <div>Three Kings Day &middot; D&iacute;a de Reyes</div>
-      <div>Epiphany</div>
-      <div>Ganna <i>Ethiopian Christmas</i></div>
-      <div>Coptic Christmas <i>Egypt</i></div>
-      <div>Orthodox Christmas</div>
-      <div>Lohri <i>Punjab</i></div>
-      <div>Makar Sankranti and Pongal <i>India</i></div>
-      <div>Preparations for Seollal <i>Korea</i></div>
-      <div>Timkat <i>Ethiopia</i></div>
-      <div>Dr. Martin Luther King Jr. Day</div>
-    </div>
+      <p class="mon">December</p>
+      <div class="hols">
+        <div>Bodhi Day <i>Buddhist</i></div>
+        <div>Hanukkah <i>Jewish</i></div>
+        <div>Santa Lucia <i>Scandinavia</i></div>
+        <div>Las Posadas <i>Mexico</i></div>
+        <div>The Winter Solstice and Yule</div>
+        <div>Nochebuena <i>Latin America</i></div>
+        <div>Christmas</div>
+        <div>Boxing Day <i>Commonwealth</i></div>
+        <div>Day of Goodwill <i>South Africa</i></div>
+        <div>Junkanoo <i>Bahamas and the Caribbean</i></div>
+        <div>Kwanzaa</div>
+        <div>Watch Night</div>
+        <div>Hogmanay <i>Scotland</i></div>
+        <div>&#332;misoka <i>Japan</i></div>
+      </div>
 
-    <p class="fine">If we have missed your holiday, name it in the caption and we will name
-    it in the newsletter.</p>
+      <p class="mon">January</p>
+      <div class="hols">
+        <div>New Year's Day</div>
+        <div>Emancipation and Jubilee Day <i>United States</i></div>
+        <div>Haitian Independence Day</div>
+        <div>Ancestors' Day <i>Haiti</i></div>
+        <div>Three Kings Day &middot; D&iacute;a de Reyes</div>
+        <div>Epiphany</div>
+        <div>Ganna <i>Ethiopian Christmas</i></div>
+        <div>Coptic Christmas <i>Egypt</i></div>
+        <div>Orthodox Christmas</div>
+        <div>Lohri <i>Punjab</i></div>
+        <div>Makar Sankranti and Pongal <i>India</i></div>
+        <div>Preparations for Seollal <i>Korea</i></div>
+        <div>Timkat <i>Ethiopia</i></div>
+        <div>Dr. Martin Luther King Jr. Day</div>
+      </div>
+
+      <p class="fine">If we have missed yours, name it in the caption and we will name it
+      in the newsletter.</p>
+    </details>
   </section>
 
   <section>
@@ -332,20 +349,22 @@ footer a{color:var(--red)}
       <li>Four generations in one frame &mdash; the grandparents and the newest baby.</li>
       <li>Your grandmother's hands, or the one dish that has to be on the table.</li>
       <li>The kinara, the menorah, the tree, the altar, the church pew.</li>
-      <li>Serving a meal, packing boxes, or a King Day march.</li>
-      <li>The airport reunion, the driveway embrace, the group photograph nobody was ready for.</li>
-      <li>Your Illinois Tech sweatshirt somewhere warm.</li>
       <li>A short video &mdash; the blessing, the music, a greeting to the association.</li>
     </ul>
-    <p class="fine">Photographs taken on a telephone are entirely welcome. Please send the
-    largest version your device will give you; print needs the detail.</p>
+    <details class="more">
+      <summary>A few more</summary>
+      <ul class="ideas">
+        <li>Serving a meal, packing boxes, or a King Day march.</li>
+        <li>The airport reunion, the driveway embrace, the group photograph nobody was ready for.</li>
+        <li>Your Illinois Tech sweatshirt somewhere warm.</li>
+      </ul>
+    </details>
   </section>
 
   <section class="memory">
     <h2>If this season carries a loss</h2>
-    <p>Many of us will set a place this year for someone who is no longer at the table. If
-    you would like to share a holiday photograph of someone you have lost, please do. We will
-    publish it with the care it deserves, and the association will hold that memory with you.</p>
+    <p>Many of us will set a place this year for someone who is no longer at the table. If you
+    would like to send a photograph of them, please do &mdash; we will publish it with care.</p>
   </section>
 
   <section>
@@ -361,7 +380,7 @@ footer a{color:var(--red)}
       <div class="fld">
         <label for="em">Email address</label>
         <input type="email" id="em" name="em" autocomplete="email" placeholder="you@example.com">
-        <p class="hint">So that we may reach you if your photograph is selected. Never published.</p>
+        <p class="hint">Never published.</p>
       </div>
 
       <div class="fld">
@@ -438,9 +457,7 @@ footer a{color:var(--red)}
       <span>Recording Secretary &amp; Editor<br>African American Alumni Association of Illinois Tech</span>
     </p>
     <p class="fine">Questions, or difficulty uploading? Write to
-    <a href="mailto:iit4a.records@gmail.com">iit4a.records@gmail.com</a>.
-    Every photograph is reviewed by the editor before it appears anywhere. Your email address
-    is used only to reach you about your submission, and is never published.</p>
+    <a href="mailto:iit4a.records@gmail.com">iit4a.records@gmail.com</a>.</p>
   </footer>
 
 </div>
