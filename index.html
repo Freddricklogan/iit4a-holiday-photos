@@ -44,21 +44,14 @@ body::before{
   font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
   color:var(--quiet);margin-bottom:1.5rem;
 }
-.head{display:flex;gap:1.15rem;align-items:flex-start}
-.mark{
-  width:46px;height:56px;flex:none;background:var(--red);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Spectral',Georgia,serif;font-weight:700;font-size:19px;color:#fff;
-  letter-spacing:.01em;
-}
-.org{
-  font-size:.66rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;
-  color:var(--mid);line-height:1.5;
+.head{display:block}
+.logo{
+  display:block;width:min(17rem,74%);height:auto;margin-bottom:1.15rem;
 }
 h1{
   font-family:'Spectral',Georgia,serif;font-weight:700;
   font-size:clamp(2rem,6.4vw,2.85rem);line-height:1.08;letter-spacing:-.018em;
-  margin-top:.3rem;text-wrap:balance;
+  text-wrap:balance;
 }
 .rule{height:1px;background:var(--rule-dk);margin:1.5rem 0}
 .rule.gold{height:2px;background:var(--gold);width:3.5rem;margin:1.4rem 0 1.5rem}
@@ -266,11 +259,10 @@ footer a{color:var(--red)}
   <p class="eyebrow">Newsletter Issue III &middot; January 31, 2027</p>
 
   <div class="head">
-    <div class="mark">4A</div>
-    <div>
-      <p class="org">African American Alumni Association<br>of Illinois Tech</p>
-      <h1>Holiday Photographs</h1>
-    </div>
+    <img class="logo" src="iit4a-logo.png"
+         width="624" height="311"
+         alt="Illinois Tech — African American Alumni Association">
+    <h1>Holiday Photographs</h1>
   </div>
 
   <div class="rule gold"></div>
