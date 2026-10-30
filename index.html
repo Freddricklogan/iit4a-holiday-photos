@@ -14,7 +14,7 @@
   --paper:#FAF9F7; --card:#FFFFFF; --rule:#E3E0DB; --rule-dk:#C6C2BB;
   --ink:#1A1D20; --mid:#54585D; --quiet:#8B8E92;
   --red:#C8102E; --red-dk:#9B0C23; --gold:#B8912B;
-  --snow:rgba(92,102,114,.24);
+  --snow:rgba(88,99,112,.40);
   --skytop:rgba(198,208,218,.42);
   --sunglow:rgba(255,206,128,.55);
   color-scheme:light;
@@ -42,7 +42,7 @@ body::before{
 /* ---- letterhead ---- */
 .eyebrow{
   font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--quiet);margin-bottom:1.6rem;
+  color:var(--quiet);margin-bottom:1.5rem;
 }
 .head{display:flex;gap:1.15rem;align-items:flex-start}
 .mark{
@@ -207,14 +207,14 @@ button.go:disabled{background:var(--rule-dk);cursor:not-allowed}
 }
 .mailbtn:hover{background:var(--red-dk)}
 
-/* ---- weather, kept quiet, down here ---- */
-.wxwrap{margin-top:3.2rem;padding-top:1.2rem;border-top:1px solid var(--rule)}
+/* ---- weather: at the top, but quiet ---- */
+.wxwrap{padding-bottom:1.1rem;margin-bottom:1.6rem;border-bottom:1px solid var(--rule)}
 .wxlab{font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-       color:var(--quiet);margin-bottom:.5rem}
-.wxbar{display:flex;flex-wrap:wrap;gap:.1rem .3rem;align-items:baseline}
+       color:var(--quiet);margin-bottom:.45rem}
+.wxbar{display:flex;flex-wrap:wrap;gap:.15rem 1rem;align-items:baseline}
 .wxbar button{
-  font:inherit;font-size:.84rem;font-family:'Spectral',Georgia,serif;
-  background:none;border:0;padding:.15rem .35rem;cursor:pointer;color:var(--quiet);
+  font:inherit;font-size:.86rem;font-family:'Spectral',Georgia,serif;
+  background:none;border:0;padding:.15rem 0;cursor:pointer;color:var(--quiet);
   border-bottom:1px solid transparent;transition:color .15s,border-color .15s;
 }
 .wxbar button:hover{color:var(--ink)}
@@ -235,6 +235,19 @@ footer a{color:var(--red)}
 <canvas id="sky" aria-hidden="true"></canvas>
 
 <div class="wrap">
+
+  <div class="wxwrap">
+    <p class="wxlab">Choose your weather</p>
+    <div class="wxbar" id="wxbar" role="group" aria-label="Choose the weather on this page">
+      <button type="button" data-w="auto" class="on" aria-label="Let the weather change on its own">Auto</button>
+      <button type="button" data-w="0">Snow</button>
+      <button type="button" data-w="1">Flurries</button>
+      <button type="button" data-w="2">Blowing</button>
+      <button type="button" data-w="3">Sleet</button>
+      <button type="button" data-w="4">Clear</button>
+      <button type="button" data-w="5">Sunshine</button>
+    </div>
+  </div>
 
   <p class="eyebrow">Newsletter Issue III &middot; January 31, 2027</p>
 
@@ -420,19 +433,6 @@ footer a{color:var(--red)}
     </form>
   </section>
 
-  <div class="wxwrap">
-    <p class="wxlab">Weather</p>
-    <div class="wxbar" id="wxbar" role="group" aria-label="Choose the weather on this page">
-      <button type="button" data-w="auto" class="on" aria-label="Let the weather change on its own">Auto</button><span class="sep">/</span>
-      <button type="button" data-w="0">Snow</button><span class="sep">/</span>
-      <button type="button" data-w="1">Flurries</button><span class="sep">/</span>
-      <button type="button" data-w="2">Blowing</button><span class="sep">/</span>
-      <button type="button" data-w="3">Sleet</button><span class="sep">/</span>
-      <button type="button" data-w="4">Clear</button><span class="sep">/</span>
-      <button type="button" data-w="5">Sunshine</button>
-    </div>
-  </div>
-
   <footer>
     <p class="sig">Dr. Freddrick Logan
       <span>Recording Secretary &amp; Editor<br>African American Alumni Association of Illinois Tech</span>
@@ -469,62 +469,123 @@ $('f').addEventListener('submit', function(e){
 });
 
 // ---- winter weather ---------------------------------------------------
-// One canvas, six conditions, deliberately restrained. It turns over on its own
-// every ~22s unless the reader pins one.
+// Six conditions, drawn to look like weather rather than particles: three
+// depth layers with their own focus and speed, one shared wind field so
+// everything gusts together, and soft-edged sprites instead of hard dots.
 (function(){
   var cv = document.getElementById('sky');
   if (!cv || !cv.getContext) return;
   var cx = cv.getContext('2d');
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // n = flakes; vy/r = fall speed and radius before depth scaling;
+  // gust = how hard the wind field pushes; base = steady sideways drift.
   var WX = [
-    { key:'snow',   label:'Snowfall',       n:78,  vy:[18, 50],  vx:[-7, 7],    r:[1.1, 2.9], sway:[.4, .9],  streak:0 },
-    { key:'flurry', label:'Light flurries', n:28,  vy:[9, 24],   vx:[-12, 12],  r:[1.0, 2.1], sway:[.9, 1.7], streak:0 },
-    { key:'blow',   label:'Blowing snow',   n:95,  vy:[18, 42],  vx:[46, 92],   r:[.8, 2.1],  sway:[.2, .6],  streak:1.4 },
-    { key:'sleet',  label:'Sleet',          n:110, vy:[150, 245],vx:[-24, -9],  r:[.5, 1.0],  sway:[0, 0],    streak:6.5 },
-    { key:'clear',  label:'Clear and cold', n:16,  vy:[4, 12],   vx:[-5, 5],    r:[.9, 1.9],  sway:[1.2, 2.1],streak:0 },
-    { key:'sun',    label:'Winter sun',     n:10,  vy:[2, 8],    vx:[-4, 4],    r:[.7, 1.6],  sway:[1.0, 2.3],streak:0, sun:1 }
+    { key:'snow',   n:140, vy:[26, 52],  r:[1.1, 2.7],  base:0,   gust:26, flut:[.5,1.3], streak:0,  haze:.0 },
+    { key:'flurry', n:58,  vy:[14, 30],  r:[1.0, 2.3],  base:0,   gust:38, flut:[1.1,2.4],streak:0,  haze:.0 },
+    { key:'blow',   n:185, vy:[22, 44],  r:[.8, 1.9],  base:62,  gust:54, flut:[.2,.7],  streak:2.2,haze:.16 },
+    { key:'sleet',  n:170, vy:[200, 330],r:[.45,.95],  base:-16, gust:10, flut:[0,.15],  streak:8,  haze:.07 },
+    { key:'clear',  n:30,  vy:[5, 14],   r:[.7, 1.6],  base:0,   gust:14, flut:[1.3,2.6],streak:0,  haze:.0, twinkle:1 },
+    { key:'sun',    n:22,  vy:[3, 11],   r:[.6, 1.5],  base:0,   gust:11, flut:[1.1,2.4],streak:0,  haze:.0, twinkle:1, sun:1 }
   ];
+
+  // Depth bands. Far flakes are small, slow, faint and reasonably sharp;
+  // near ones are big, fast, faint and thrown badly out of focus — which is
+  // what the eye actually sees through a window.
+  var LAYERS = [
+    { share:.58, size:.52, speed:.52, alpha:.52, soft:.68, windMul:.5 },
+    { share:.34, size:1.15,speed:1.0, alpha:1.0, soft:.44, windMul:1.0 },
+    { share:.08, size:5.0, speed:2.1, alpha:.20, soft:.05, windMul:1.6 }
+  ];
+
   var wi = 0, cur = WX[0], live = cur.n, W = 0, H = 0, dpr = 1;
-  var snow = 'rgba(92,102,114,.24)', glow = 'rgba(255,206,128,.55)', sunAmt = 0;
-  var POOL = 120, P = [];
+  var rgb = [92,102,114], baseA = .24;
+  var glow = 'rgba(255,206,128,.55)', sunAmt = 0, hazeAmt = 0;
+  var POOL = 200, P = [], sprites = [];
 
   function rnd(a){ return a[0] + Math.random() * (a[1] - a[0]); }
+
+  function readTokens(){
+    var cs = getComputedStyle(document.documentElement);
+    var v = cs.getPropertyValue('--snow').trim();
+    var m = v.match(/rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)(?:[ ,/]+([\d.]+))?/);
+    if (m){
+      rgb = [ +m[1], +m[2], +m[3] ];
+      baseA = m[4] === undefined ? 1 : +m[4];
+    }
+    var g = cs.getPropertyValue('--sunglow').trim(); if (g) glow = g;
+  }
+
+  // One soft sprite per depth band, drawn once and reused. The `soft` stop
+  // is what turns a disc into a blurred bokeh blob.
+  function buildSprites(){
+    sprites = LAYERS.map(function(L){
+      var R = 26;                                   // sprite radius in px
+      var c = document.createElement('canvas');
+      c.width = c.height = R * 2;
+      var g2 = c.getContext('2d');
+      var grd = g2.createRadialGradient(R, R, 0, R, R, R);
+      var col = function(a){ return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + a + ')'; };
+      grd.addColorStop(0, col(1));
+      grd.addColorStop(L.soft, col(.72));
+      grd.addColorStop(1, col(0));
+      g2.fillStyle = grd;
+      g2.beginPath(); g2.arc(R, R, R, 0, 6.2832); g2.fill();
+      return c;
+    });
+  }
+
   function roll(p, w){
-    p.vy = rnd(w.vy); p.vx = rnd(w.vx); p.r = rnd(w.r);
-    p.sw = rnd(w.sway); p.st = w.streak; p.wx = w.key;
-    p.ph = Math.random() * 6.283;
+    p.vy = rnd(w.vy); p.r = rnd(w.r);
+    p.base = w.base; p.gust = w.gust;
+    p.fl = rnd(w.flut); p.flp = 300 + Math.random() * 900;
+    p.st = w.streak; p.tw = w.twinkle ? Math.random() * 6.283 : 0;
+    p.wx = w.key; p.ph = Math.random() * 6.283;
   }
   function seed(){
     P = [];
+    var cuts = [], acc = 0;
+    LAYERS.forEach(function(L){ acc += L.share; cuts.push(acc); });
     for (var i = 0; i < POOL; i++){
-      var p = { x: Math.random() * W, y: Math.random() * H, due: 0 };
+      var u = (i + .5) / POOL, li = 0;
+      while (li < cuts.length - 1 && u > cuts[li]) li++;
+      var p = { x: Math.random() * W, y: Math.random() * H, L: li, due: 0 };
       roll(p, cur); P.push(p);
     }
+    // interleave so thinning the live count doesn't empty one whole layer
+    for (var k = P.length - 1; k > 0; k--){
+      var j = Math.floor(Math.random() * (k + 1));
+      var t = P[k]; P[k] = P[j]; P[j] = t;
+    }
   }
-  function readTokens(){
-    var cs = getComputedStyle(document.documentElement);
-    var v = cs.getPropertyValue('--snow').trim();     if (v) snow = v;
-    var g = cs.getPropertyValue('--sunglow').trim();  if (g) glow = g;
+
+  // The wind field: three sines at unrelated periods read as gusts that
+  // build and fall away, which is the thing that makes snow look alive.
+  function windAt(t){
+    return Math.sin(t / 4300) * .55
+         + Math.sin(t / 1700 + 1.3) * .30
+         + Math.sin(t / 830 + 2.9) * .15;
   }
-  function fade(c){
-    return c.replace(/rgba?\(([^)]+)\)/, function(m, inner){
-      return 'rgba(' + inner.split(',').slice(0,3).join(',') + ',0)';
-    });
-  }
+
   function size(){
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
+  function fade(c){
+    return c.replace(/rgba?\(([^)]+)\)/, function(m, inner){
+      return 'rgba(' + inner.split(',').slice(0,3).join(',') + ',0)';
+    });
+  }
 
   function draw(dt, t){
     cx.clearRect(0, 0, W, H);
 
+    // low winter sun, high and to the right
     sunAmt += ((cur.sun ? 1 : 0) - sunAmt) * Math.min(dt * 1.5, 1);
     if (sunAmt > .01){
-      var sx = W * 0.84, sy = H * 0.11, rad = Math.max(W, H) * 0.6;
+      var sx = W * .84, sy = H * .11, rad = Math.max(W, H) * .6;
       var rg = cx.createRadialGradient(sx, sy, 0, sx, sy, rad);
       rg.addColorStop(0, glow);
       rg.addColorStop(.38, fade(glow));
@@ -533,32 +594,66 @@ $('f').addEventListener('submit', function(e){
       cx.fillRect(0, 0, W, H); cx.restore();
     }
 
-    cx.strokeStyle = snow; cx.fillStyle = snow;
+    // drifting haze across the lower part of the frame, for driving snow
+    hazeAmt += ((cur.haze || 0) - hazeAmt) * Math.min(dt * 1.2, 1);
+    if (hazeAmt > .004){
+      var hg = cx.createLinearGradient(0, H * .45, 0, H);
+      var hc = function(a){ return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + a + ')'; };
+      hg.addColorStop(0, hc(0));
+      hg.addColorStop(1, hc(hazeAmt));
+      cx.fillStyle = hg; cx.fillRect(0, 0, W, H);
+    }
+
+    var wind = windAt(t);
     var n = Math.min(Math.round(live), POOL);
+
     for (var i = 0; i < n; i++){
-      var p = P[i];
+      var p = P[i], L = LAYERS[p.L];
+
       if (p.wx !== cur.key && t >= p.due) roll(p, cur);
-      var sway = p.sw ? Math.sin(t / 900 + p.ph) * p.sw * 14 : 0;
-      p.x += (p.vx + sway) * dt;
-      p.y += p.vy * dt;
-      if (p.y - p.r > H){ p.y = -p.r * 2; p.x = Math.random() * W; }
-      if (p.x < -12) p.x = W + 10; else if (p.x > W + 12) p.x = -10;
+
+      var flutter = p.fl ? Math.sin(t / p.flp + p.ph) * p.fl * 13 : 0;
+      var vx = (p.base + wind * p.gust) * L.windMul + flutter;
+      var vy = p.vy * L.speed * (1 + .10 * Math.sin(t / 2100 + p.ph));
+
+      p.x += vx * dt;
+      p.y += vy * dt;
+
+      var rr = p.r * L.size;
+      if (p.y - rr > H){ p.y = -rr * 2; p.x = Math.random() * W; }
+      else if (p.y + rr < -40){ p.y = H + rr; }
+      if (p.x < -40) p.x = W + 20; else if (p.x > W + 40) p.x = -20;
+
+      var a = baseA * L.alpha;
+      if (p.tw) a *= .55 + .45 * Math.sin(t / 700 + p.tw);
+      if (a <= .004) continue;
+      cx.globalAlpha = a;
+
       if (p.st){
+        // sleet and driving snow: a short motion-blurred streak, drawn as a
+        // squashed sprite along the direction of travel
         var k = p.st * dt;
-        cx.lineWidth = Math.max(.6, p.r * .85);
-        cx.beginPath(); cx.moveTo(p.x, p.y);
-        cx.lineTo(p.x - p.vx * k, p.y - p.vy * k); cx.stroke();
+        var dx = -vx * k, dy = -vy * k;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        if (len < 1) len = 1;
+        cx.save();
+        cx.translate(p.x, p.y);
+        cx.rotate(Math.atan2(dy, dx));
+        cx.drawImage(sprites[p.L], -len, -rr, len + rr * 2, rr * 2);
+        cx.restore();
       } else {
-        cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.2832); cx.fill();
+        var d = rr * 2;
+        cx.drawImage(sprites[p.L], p.x - rr, p.y - rr, d, d);
       }
     }
+    cx.globalAlpha = 1;
   }
 
   var pinned = false, bar = document.getElementById('wxbar');
   function setWx(i){
     wi = i; cur = WX[i];
     var now = performance.now();
-    for (var k = 0; k < P.length; k++) P[k].due = still ? 0 : now + Math.random() * 2600;
+    for (var k = 0; k < P.length; k++) P[k].due = still ? 0 : now + Math.random() * 2800;
     if (still){ live = cur.n; draw(0, now); }
   }
   function mark(val){
@@ -581,7 +676,7 @@ $('f').addEventListener('submit', function(e){
     });
   }
 
-  size(); readTokens(); seed();
+  size(); readTokens(); buildSprites(); seed();
   addEventListener('resize', function(){ size(); });
 
   if (still){ live = cur.n; draw(0, 0); return; }
