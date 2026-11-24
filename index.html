@@ -37,10 +37,20 @@ body{
 .wx button[aria-pressed="true"]{background:var(--gold2);border-color:var(--gold2);color:#14293f}
 
 /* masthead */
-header{text-align:center;padding:46px 0 34px}
+header{text-align:center;padding:46px 0 34px;position:relative}
+header:before{content:"";position:absolute;left:-14%;right:-14%;top:-30px;bottom:-16px;z-index:-1;
+  background:radial-gradient(ellipse 72% 62% at 50% 48%,rgba(6,14,24,.56) 0%,rgba(6,14,24,.34) 48%,rgba(6,14,24,0) 76%)}
+footer{position:relative}
+footer:before{content:"";position:absolute;left:-10%;right:-10%;top:-14px;bottom:-14px;z-index:-1;
+  background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(6,14,24,.5) 0%,rgba(6,14,24,0) 74%)}
 .logo{width:184px;height:auto;background:#fff;padding:9px 12px;display:inline-block}
 .kick{font-size:10.5px;letter-spacing:4.5px;text-transform:uppercase;color:var(--gold2);
-  font-weight:700;margin-top:20px}
+  font-weight:700;margin-top:20px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+header h1,header .deck,header .issue{text-shadow:0 2px 16px rgba(0,0,0,.42)}
+body.warm .kick{color:#ffffff;text-shadow:0 1px 3px rgba(120,52,10,.9),0 2px 14px rgba(120,52,10,.6)}
+body.warm header h1,body.warm header .deck{text-shadow:0 2px 4px rgba(120,52,10,.55),0 3px 20px rgba(120,52,10,.5)}
+body.warm header .deck{color:#fff4e4}
+body.warm header .issue{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(120,52,10,.8)}
 h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(38px,9vw,64px);
   color:#fff;line-height:1.04;margin-top:14px;font-weight:700;letter-spacing:-.5px}
 .deck{font-family:'Playfair Display',Georgia,serif;font-style:italic;
@@ -51,9 +61,11 @@ h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(38px,9vw,64px);
 /* cards */
 .card{background:var(--cream);border-top:4px solid var(--gold);padding:30px 26px;margin:0 0 20px;
   box-shadow:0 18px 44px rgba(0,0,0,.26)}
-.card.dark{background:rgba(255,255,255,.055);border-top-color:rgba(184,145,43,.6);
-  color:#dde5ee;box-shadow:none;border:1px solid rgba(255,255,255,.1);border-top-width:4px}
-.card.dark h2{color:#fff}.card.dark p{color:#c8d3e0}
+.card.dark{background:rgba(10,22,36,.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  border-top-color:rgba(184,145,43,.85);
+  color:#e4ebf3;box-shadow:0 14px 38px rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-top-width:4px}
+.card.dark h2{color:#fff}.card.dark p{color:#d3dde8}
+.card.dark .chips span{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);color:#e8eef5}
 h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(23px,5.5vw,30px);
   color:var(--navy2);line-height:1.22;margin-bottom:12px}
 h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);
@@ -273,11 +285,13 @@ let picked = [];
 
 /* ---------------------------------------------------------- weather ---- */
 const sky = $('#sky'), ctx = sky.getContext('2d');
-let W, H, parts = [], mode = 'auto', gust = 0, gustT = 0, flash = 0;
+let W, H, parts = [], clouds = [], mode = 'auto', gust = 0, gustT = 0, flash = 0;
 
 const PRESET = {
-  clear    : {n:0,   spd:0,    wind:0,   size:[0,0],     kind:'none',  bg:'radial-gradient(ellipse 120% 80% at 50% -10%,#24456b 0%,#14293f 55%,#0d1b2a 100%)'},
-  sun      : {n:0,   spd:0,    wind:0,   size:[0,0],     kind:'none',  bg:'radial-gradient(ellipse 120% 90% at 50% -14%,#7fa6cf 0%,#45688f 45%,#22405f 100%)'},
+  clear    : {n:0,   spd:0,    wind:0,   size:[0,0],     kind:'none',  clouds:9,  cloudSpd:[.09,.34], warm:0,
+              bg:'radial-gradient(ellipse 120% 80% at 50% -10%,#2b5080 0%,#17304c 55%,#0d1b2a 100%)'},
+  sun      : {n:0,   spd:0,    wind:0,   size:[0,0],     kind:'none',  clouds:6,  cloudSpd:[.06,.26], warm:1,
+              bg:'radial-gradient(ellipse 130% 95% at 50% -16%,#ffd27a 0%,#f0a04b 22%,#d9713a 42%,#8f5540 64%,#3d3f55 100%)'},
   flurries : {n:170, spd:[.5,1.6], wind:.25, size:[.9,2.4], kind:'snow', bg:'radial-gradient(ellipse 120% 80% at 50% -10%,#2a4b72 0%,#17304a 55%,#0d1b2a 100%)'},
   snow     : {n:520, spd:[1.1,3.2],wind:.7, size:[1.2,3.8],kind:'snow', bg:'radial-gradient(ellipse 120% 80% at 50% -10%,#22425f 0%,#13293f 55%,#0b1724 100%)'},
   blizzard : {n:1400,spd:[3.6,9.5],wind:3.4,size:[1.1,4.6],kind:'snow', bg:'radial-gradient(ellipse 120% 80% at 50% -10%,#30465c 0%,#1b2c3d 55%,#101b26 100%)'},
@@ -299,6 +313,32 @@ function rnd(a,b){ return a + Math.random()*(b-a); }
 function build(key){
   const p = PRESET[key] || PRESET.snow;
   $('#backdrop').style.background = p.bg;
+  document.body.classList.toggle('warm', !!p.warm);
+
+  // ---- clouds (clear + sunshine)
+  clouds = [];
+  const nc = p.clouds || 0;
+  for (let i=0;i<nc;i++){
+    const depth = Math.random();
+    const puffs = [];
+    const lobes = 4 + Math.floor(Math.random()*4);
+    for (let j=0;j<lobes;j++){
+      puffs.push({
+        dx: rnd(-1,1) * (70 + depth*110),
+        dy: rnd(-.32,.32) * (26 + depth*30),
+        r : rnd(34,72) * (0.55 + depth)
+      });
+    }
+    clouds.push({
+      x: Math.random()*(innerWidth+500) - 250,
+      y: rnd(innerHeight*0.03, innerHeight*0.62),
+      v: rnd(p.cloudSpd[0], p.cloudSpd[1]) * (0.4 + depth*1.5),
+      d: depth,
+      a: 0.10 + depth*0.26,
+      puffs: puffs
+    });
+  }
+
   parts = [];
   if (!p.n) return;
   for (let i=0;i<p.n;i++){
@@ -333,10 +373,71 @@ function tick(){
   gustT += 0.006;
   gust = (Math.sin(gustT) * 0.55 + Math.sin(gustT*2.37) * 0.3 + 0.7) * p.wind;
 
+  const warm = (PRESET[key] && PRESET[key].warm) ? 1 : 0;
+
   if (key === 'sun'){
-    const g = ctx.createRadialGradient(innerWidth*.5,-60,10,innerWidth*.5,-60,innerHeight*.85);
-    g.addColorStop(0,'rgba(255,238,190,.55)'); g.addColorStop(1,'rgba(255,238,190,0)');
+    const cx = innerWidth*.5, cy = -innerHeight*.07, t = performance.now()/1000;
+
+    // broad warm wash — soft, no hard stops
+    let g = ctx.createRadialGradient(cx,cy,10,cx,cy,innerHeight*1.25);
+    g.addColorStop(0,   'rgba(255,248,224,.80)');
+    g.addColorStop(.22, 'rgba(255,214,146,.52)');
+    g.addColorStop(.46, 'rgba(249,167,98,.26)');
+    g.addColorStop(.74, 'rgba(226,128,78,.09)');
+    g.addColorStop(1,   'rgba(226,128,78,0)');
     ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
+
+    // sun — layered haloes rather than one hard disc
+    const pulse = 1 + Math.sin(t*0.55)*0.035;
+    for (const [r,a] of [[300,.16],[210,.24],[132,.34],[72,.5]]){
+      g = ctx.createRadialGradient(cx,cy,2,cx,cy,r*pulse);
+      g.addColorStop(0,  'rgba(255,253,243,'+a+')');
+      g.addColorStop(.5, 'rgba(255,230,168,'+(a*0.45)+')');
+      g.addColorStop(1,  'rgba(255,198,112,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx,cy,r*pulse,0,6.2832); ctx.fill();
+    }
+
+    // light shafts — wide, faint, feathered at both edges
+    ctx.save();
+    ctx.translate(cx,cy);
+    const len = innerHeight*1.35;
+    for (let i=0;i<6;i++){
+      const a = (i/6)*Math.PI*2 + t*0.018;
+      const w = 0.10 + Math.sin(t*0.3 + i*1.7)*0.03;
+      for (const [frac,alpha] of [[1,.045],[.62,.05],[.3,.055]]){
+        const sg = ctx.createLinearGradient(0,0,Math.cos(a)*len,Math.sin(a)*len);
+        sg.addColorStop(0,  'rgba(255,240,196,'+alpha+')');
+        sg.addColorStop(.45,'rgba(255,224,164,'+(alpha*0.5)+')');
+        sg.addColorStop(1,  'rgba(255,210,140,0)');
+        ctx.fillStyle = sg;
+        ctx.beginPath(); ctx.moveTo(0,0);
+        ctx.arc(0,0,len,a-w*frac,a+w*frac); ctx.closePath(); ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  // ---- drifting clouds
+  for (const c of clouds){
+    c.x += c.v * (0.5 + c.d);
+    const span = 260 + c.d*200;
+    if (c.x - span > innerWidth + 60){ c.x = -span - 60; c.y = rnd(innerHeight*0.03, innerHeight*0.62); }
+    for (const q of c.puffs){
+      const r = q.r, px = c.x + q.dx, py = c.y + q.dy;
+      const cg = ctx.createRadialGradient(px, py, r*0.12, px, py, r);
+      if (warm){
+        cg.addColorStop(0,  'rgba(255,238,206,'+(c.a*1.25)+')');
+        cg.addColorStop(.55,'rgba(255,206,150,'+(c.a*0.62)+')');
+        cg.addColorStop(1,  'rgba(240,160,110,0)');
+      } else {
+        cg.addColorStop(0,  'rgba(216,230,246,'+(c.a*0.95)+')');
+        cg.addColorStop(.55,'rgba(176,198,224,'+(c.a*0.5)+')');
+        cg.addColorStop(1,  'rgba(150,176,208,0)');
+      }
+      ctx.fillStyle = cg;
+      ctx.beginPath(); ctx.arc(px, py, r, 0, 6.2832); ctx.fill();
+    }
   }
 
   if (key === 'blizzard'){
